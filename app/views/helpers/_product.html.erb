@@ -1,0 +1,23 @@
+<div class="panel panel-primary panel-default">
+
+  <div class="panel-body">
+    <%= link_to(image_tag(product.images.first, class: "img-responsive center-block"), product_path(product.id)) unless product.images.nil? %>
+  </div>
+
+  <div class="panel-footer">
+    <h4 class="panel-title hidden-sm hidden-md hidden-lg" title="<%= product.name %>">
+      <%= link_to truncate(product.name, :length   => 30, :separator => /\w/,
+                               :omission => "..."), product_path(product.id) %>
+    </h4>
+    <h4 class="panel-title hidden-xs" title="<%= product.name %>">
+      <%= link_to product.name, product_path(product.id) %>
+    </h4>
+    <br/>
+    <p><strong><%= pretty_money product.price %></strong><span class="smaller_print"><%= " + #{t('VAT')} #{Marketcloud.configuration.application.tax_rate}%" %></span></p>
+    <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
+      <%= f.hidden_field :product_id, value: product.id %>
+      <%= f.hidden_field :quantity, value: 1 %>
+      <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success btn-sm" %>
+    <% end %>
+  </div>
+</div>

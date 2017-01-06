@@ -1,0 +1,123 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ * require_tree .
+ * require_self
+ */
+
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+ @import "font-awesome";
+
+// POSITIONING
+
+.margin-bottom-20px {
+  margin-bottom: 20px;
+}
+
+.taxon-item {
+  margin-bottom: 5px;
+}
+
+// TYPOGRAPHY
+
+.smaller_print {
+  font-size: 0.8em;
+}
+
+// HEADER
+
+.navbar-brand {
+  padding-top:    0px;
+  padding-bottom: 0px;
+  padding-left:   0px;
+}
+
+.navbar-bg {
+    background-color: #FCEF00;
+    border-radius: 0px;
+}
+
+.navbar .navbar-nav > li > a.menu-item{
+    background-color: #FCEF00;
+    color: black;
+    border: 1px #FCEF00 solid;
+}
+
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+    background-color: #FCEF00;
+    color: black;
+    border: 1px darken(#FCEF00, 10%) solid;
+}
+
+.special_button {
+  background-color: #232F3E !important;
+  color: lighten(#FCEF00, 30%) !important;
+  font-weight: bolder;
+  border: 1px #232F3E solid;
+}
+
+.logo {
+  max-height: 50px;
+}
+
+.no-margin {
+  margin: 0px;
+}
+
+
+// icon bar color
+.navbar-header .navbar-toggle .icon-bar {
+    background-color: black;
+}
+
+.breadcrumbs-section {
+  padding-bottom: 10px;
+  margin-bottom: 10px
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
+  }
+}
+
+// PRODUCTS
+.product-name-title {
+  line-height: 2.5ex;
+  height: 7.5ex;
+  overflow: hidden;
+}
+
+
+// CHECKOUT
+
+.stage-block {
+  padding: 10px;
+}
+
+// ADDRESS
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
+
+// FOOTER
+
+#footer {
+    background-color: #232F3E;
+    padding-bottom: 20px;
+}

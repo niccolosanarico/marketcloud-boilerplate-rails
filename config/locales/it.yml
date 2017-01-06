@@ -1,0 +1,90 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+it:
+  search: "Cerca"
+  all_categories: "Tutte le categorie"
+  cart: "Carrello"
+  cart_recap: "Il tuo carrello"
+  categories: "Categories"
+  add_to_cart: "Aggiungi al carrello"
+  billing_address: "Indirizzo di fatturazione"
+  shipping_address: "Indirizzo di spedizione"
+  select_shipping: "Seleziona la spedizione"
+  select_address: "Selezione indirizzo di spedizione"
+  select_address_error: "Per favore crea o seleziona un indirizzo di spedizione"
+  select_shipping_error: "Per favore seleziona un metodo di spedizione"
+  select_billing_address: "Seleziona indirizzo di fatturazione"
+  order_total: "Totale ordine"
+  items_total: "Totale articoli"
+  shipping_total: "Spedizione"
+  taxes_total: "Tasse"
+  new_address: "Nuovo indirizzo"
+  create: "Crea"
+  select_shipping: "Seleziona la spedizione"
+  add_address: "Aggiungi un indirizzo"
+  order_recap: "Riepilogo ordine"
+  total: "Totale"
+  VAT: "IVA"
+  VAT_CODE: "Partita IVA"
+  shipping: "Spedizione"
+  edit: "Modifica"
+  delete: "Elimina"
+  select_payment: "Completa e paga"
+  purchase_again: "Compralo di nuovo"
+  order_details: Dettagli dell'ordine"
+  ordered_on: "Ordine del"
+  order_num: "Ordine n."
+  order_status: "Stato"
+  your_order: "Il tuo ordine"
+  quantity: "Quantità"
+  checkout: "Procedi all'acquisto"
+  add_items_to_cart: "Il carrello è vuoto, prosegui con gli acquisti!"
+  remove_from_cart: "Rimuovi"
+  update_cart: "Aggiorna"
+  full_name: "Nome azienda"
+  address1: "Indirizzo"
+  address1: "Indirizzo, cont."
+  postal_code: "CAP"
+  city: "Città"
+  country: "Paese"
+  phone_number: "Telefono"
+  save: "Salva"
+  order_success: "Grazie per il tuo ordine! Di seguito i dettagli"
+  address: "Indirizzo"
+  shipment: "Spedizione"
+  payment: "Pagamento"
+  price: "Prezzo"
+  sign_in: "Accedi"
+  sign_up: "Registrati"
+  sign_out: "Esci"
+  pw_error: "La password non coincide con la conferma, per favore verifica"
+  pw_error_length: "La password dovrebbe essere lunga almeno 8 caratteri"
+  new_user_welcome: "Grazie per esserti registrato!"
+  already_client: "Già cliente? Accedi!"
+  not_client: "Non ancora cliente? Registrati!"
+  all_category: "Tutte le categorie"
+  existing_email: "L'email esiste già"
+  my_page: "Il mio account"
+  forbidden: "La risorsa non è disponbile"
+  details: "Ulteriori dettagli"
+  previous: "Precedente"
+  next: "Successiva"

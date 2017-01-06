@@ -6,28 +6,37 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <meta name='title' content='<%= yield_meta_tag(:title) %>' />
+    <meta name='description' content='<%= yield_meta_tag(:description) %>' />
+    <meta name='keywords' content='<%= yield_meta_tag(:keywords) %>' />
+
+    <meta name="turbolinks-cache-control" content="no-cache">
+
+    <script src="https://js.braintreegateway.com/js/braintree-2.27.0.min.js"></script>
+
   </head>
 
   <body>
 
-    <div class="container">
-      <%= render 'layouts/header' %>
-    </div>
 
-    <div class="container">
-      <!-- <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>">
-          <%= value %>
+    <%= render 'layouts/header' %>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-offset-1 col-sm-offset-1 breadcrumbs-section">
+          <%= render_breadcrumbs %>
         </div>
-      <% end %> -->
+      </div>
+
+      <div class="row">
+        <%= flash_messages %>
+      </div>
 
       <%= yield %>
     </div>
 
-    <div class="container">
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
-    </div>
-
+    <%= render 'layouts/footer' %>
+    <%= debug(params) if Rails.env.development? %>
   </body>
 </html>

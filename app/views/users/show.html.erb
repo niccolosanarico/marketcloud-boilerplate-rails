@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1 col-sm-1 col-sm-10 col-xs-12">
+  </div>
+
+  <div class="col-md-10 col-md-offset-1 col-sm-1 col-sm-10 col-xs-12">
+
+    <% if @orders.length > 0 %>
+      <div class="table-responsive">
+        <table class="table">
+          <% @orders.each do |order| %>
+            <div class="col-sm-12">
+              <div class="col-sm-10">
+                <tr>
+                  <td class="col-md-2">
+                    <%= t('ordered_on') %> <%= l( Time.at(order.created_at/1000).to_datetime, format: '%e %B %Y') %>
+                  </td>
+                  <td class="col-md-2">
+                    <%= t('order_status') %>: <%= order.status %>
+                  </td>
+                  <td class="col-md-2" style="color: red">
+                    <%= pretty_money order.total %>
+                  </td>
+                  <td class="col-md-2">
+                    <%= link_to t('details'), order_path(order.id), class: "btn btn-default btn-info btn-xs" %>
+                  </td>
+                </tr>
+              </div>
+            </div>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+<%= console %>

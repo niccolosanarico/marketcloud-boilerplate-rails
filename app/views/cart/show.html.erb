@@ -1,0 +1,53 @@
+<div class="row">
+
+  <div class="col-sm-8 col-xs-12 margin-bottom-20px">
+    <% if @cart.items.length > 0 %>
+      <div class="table-responsive">
+        <table class="table">
+          <% @cart.items.each do |item| %>
+            <div class="col-sm-12">
+              <div class="col-sm-10">
+                <tr>
+                  <td class="col-md-2"><%=image_tag item["images"].first, class: "img-responsive" %></td>
+                  <td class="col-md-6">
+                    <strong><%= item["name"] %></strong>
+                    <%= form_for :cart, url: cart_remove_path, method: :patch do |f| %>
+                      <%= f.hidden_field :product_id, value: item["id"] %>
+                      <%= f.hidden_field :quantity, value: item["quantity"] %>
+                      <%= f.submit value: t('remove_from_cart'), class: "btn btn-danger btn-default btn-xs"%>
+                    <% end %>
+                  </td>
+                  <td  class="col-md-2" style="color: red"><%= pretty_money item["price"] %></td>
+                  <td class="col-md-2">
+                    <%= form_for :cart, url: cart_update_path, method: :patch do |f| %>
+                      <%= f.hidden_field :product_id, value: item["id"] %>
+                      <%= f.text_field :quantity, value: item["quantity"], required: true %>
+                      <%= f.submit value: t('update_cart'), class: "btn btn-info btn-default btn-xs"%>
+                    <% end %>
+                  </td>
+                </tr>
+              </div>
+            </div>
+          <% end %>
+        </table>
+      </div>
+
+
+      <div class="col-sm-12">
+        <%= form_for :checkout, url: checkout_address_path, method: :get do |f| %>
+          <%= f.hidden_field :cart_id, value: @cart.id %>
+          <div class="pull-right">
+            <%= f.submit value: t('checkout'), class: "btn btn-default btn-success"%>
+          </div>
+        <% end %>
+      </div>
+
+    <% else %>
+        <p><%= t('add_items_to_cart') %></p>
+    <% end %>
+  </div>
+
+  <div class='col-sm-4 col-xs-12'>
+    <%= render 'helpers/cart_total' %>
+  </div>
+</div>

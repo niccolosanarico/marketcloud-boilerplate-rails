@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= t('cart_recap') %></h4>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+    <tr><td><%= "#{t('items_total')}: "%></td><td class="text-right"><%= pretty_money @cart.total %></td></tr>
+    <tr><td><%= "#{t('VAT')}: "%></td><td class="text-right"><%= pretty_money @cart.vat %></td></tr>
+    <tr><td><%= "#{t('shipping')}: "%></td><td class="text-right"><%= pretty_money 0 %></td></tr>
+    <tr class="info"><td><h4><%= "#{t('total')}: "%></h4></td><td class="text-right"><h4><%= pretty_money(@cart.total + @cart.vat) %></h4></td></tr>
+    </table>
+  </div>
+</div>

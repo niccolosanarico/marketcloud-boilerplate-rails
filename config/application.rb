@@ -21,5 +21,11 @@ module Mcshop
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    Rails.application.configure do
+      config.middleware.use(Rack::Tracker) do
+        handler :google_analytics, { tracker: "#{ENV['ga_code']}", enhanced_ecommerce: true }
+      end
+    end
   end
 end

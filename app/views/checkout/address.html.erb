@@ -1,0 +1,108 @@
+<div class="row">
+
+  <div class="col-md-offset-1 col-md-7 col-sm-8 col-xs-12 margin-bottom-20px">
+    <div class="col-xs-4">
+      <div class="bg-info text-center stage-block">
+        <strong>1. <%= t('address') %> </strong>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="text-center stage-block">
+        <strong>2. <%= t('shipment') %></strong>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="text-center stage-block">
+        <strong>3. <%= t('payment') %></strong>
+      </div>
+    </div>
+  </div>
+
+  <%= form_for :checkout, url: checkout_shipment_path, method: :get, html: { class: "form-horizontal"} do |f| %>
+    <%= f.hidden_field :cart_id, value: @cart.id %>
+
+    <div class="col-md-offset-1 col-md-8 col-sm-8 col-xs-12 margin-bottom-20px">
+      <div class = "col-sm-12">
+        <h4><%= t("select_address") %></h4>
+      </div>
+
+      <!-- Shipping address -->
+
+      <div class="col-sm-12">
+        <ul class="list-unstyled">
+          <% @addresses.each do |addr| %>
+            <%= render 'helpers/address/address', address: addr, form: f, radio_for: :shipping_address  %>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="col-sm-12">
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newAddressModal">
+          <%= t('add_address') %>
+        </button>
+      </div>
+
+      <div class="col-sm-12">
+        <label class="checkbox-inline">
+          <input type="checkbox" id="sameShippingAndBilling" value="sameBilling" checked=true> Same billing address
+        </label>
+      </div>
+
+      <!-- Billing address -->
+
+      <div id="selectBillingAddress">
+        <div class = "col-sm-12">
+          <h4><%= t("select_billing_address") %></h4>
+        </div>
+
+        <div class="col-sm-12">
+          <ul class="list-unstyled">
+            <% @addresses.each do |addr| %>
+              <%= render 'helpers/address/address', address: addr, form: f, radio_for: :billing_address %>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="col-sm-12">
+          <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newAddressModal">
+            <%= t('add_address') %>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-xs-12">
+        <div class="form-group pull-right">
+          <%= f.submit value: "#{t('select_address')} >", class:"btn btn-success" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-4 col-xs-12 margin-bottom-10px">
+      <%= render 'helpers/cart_total' %>
+    </div>
+  <% end %>
+
+</div> <!-- class="row" -->
+
+
+<%= console %>
+
+<!-- PAGE MODALS -->
+
+<% @addresses.each do |addr| %>
+  <%= render 'helpers/address/address_modal', address: addr %>
+<% end %>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="newAddressModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><%= t('new_address') %></h4>
+      </div>
+      <div class="modal-body">
+        <%= render 'helpers/address/address_new' %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

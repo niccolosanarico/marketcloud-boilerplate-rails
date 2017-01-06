@@ -1,0 +1,30 @@
+<div class="row">
+  <%= form_for :address, url: address_edit_path(address.id), method: :post do |fm| %>
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+      <div class="form-group required"><%= fm.label t('full_name'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :full_name, class: "form-control input-sm", required: true, value: address.full_name %></div></div>
+      <div class="form-group required"><%= fm.label t('VAT_CODE'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :vat, class: "form-control input-sm", required: true, value: address.vat %></div></div>
+      <div class="form-group required"><%= fm.label t('address1'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :address1, class: "form-control input-sm", required: true, value: address.address1 %></div></div>
+      <div class="form-group"><%= fm.label t('address2'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :address2, class: "form-control input-sm", value: address.address2 %></div></div>
+      <div class="form-group required"><%= fm.label t('postal_code'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :postal_code, class: "form-control input-sm", required: true, value: address.postal_code %></div></div>
+      <div class="form-group required"><%= fm.label t('city'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :city, class: "form-control input-sm", required: true, value: address.city  %></div></div>
+      <div class="form-group required"><%= fm.label t('country'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :country, class: "form-control input-sm", required: true, value: address.country %></div></div>
+      <div class="form-group"><%= fm.label :email, class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :email, class: "form-control input-sm", value: address.email %></div></div>
+      <div class="form-group"><%= fm.label t('phone_number'), class: "col-sm-3 control-label" %>
+        <div class="col-sm-9"><%= fm.text_field :phone_number, class: "form-control input-sm", value: address.phone_number %></div></div>
+
+
+    <div class="form-group pull-right col-sm-12">
+      <%= fm.submit value: t("save"), class:"btn btn-default" %>
+    </div>
+  <% end %>
+</div>

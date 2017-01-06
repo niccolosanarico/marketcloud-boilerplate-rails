@@ -1,0 +1,96 @@
+<header class="header">
+  <nav class="navbar no-margin navbar-bg">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <%= link_to image_tag("logo.png", class: "logo", alt: "Company Logo"), root_path, { class: "navbar-brand"}%>
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#search_navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span><%= fa_icon "search 2x" %></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="search_navbar">
+          <div class="nav navbar-nav">
+
+            <%= form_for :search, url: products_path, html: { class: "navbar-form navbar-left", role: "search" }, method: :get do |f| %>
+              <div class="form-group">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle menu-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <%= t('all_category') %> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <% Category.get_roots().each do |c| %>
+                        <li><%= link_to c.name, "#", class: "menu-item" %></li>
+                      <% end %>
+                    </ul>
+                    <%= f.hidden_field :category, value:"all", id:'category_field'  %>
+                  </div>
+
+                  <%= f.text_field :search_text, class: "form-control col-md-8" %>
+
+                  <span class="input-group-btn">
+                    <%= f.submit class:"btn btn-default", value: t('search') %>
+                  </span>
+                </div>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+    </div>
+  </nav>
+
+  <nav class="navbar navbar-bg">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-navbar" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="collapse navbar-collapse" id="menu-navbar">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('categories') %> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <% Category.get_roots().each do |c| %>
+                <li><%= link_to c.name, category_path(c.id), class: "menu-item" %></li>
+              <% end %>
+            </ul>
+          <!-- <li class="active"><a href="#">Chi Siamo <span class="sr-only">(current)</span></a></li> -->
+
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <% if signed_in? %>
+              <li>
+                <%= link_to t('my_page'), user_path(current_user.id), class: "menu-item" %>
+              </li>
+              <li>
+                <%= link_to t('sign_out'), signout_path, class: "menu-item" %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to t('sign_in'), signin_path, class: "menu-item" %>
+              </li>
+              <li>
+                <%= link_to t('sign_up'), signup_path, class: "special_button" %>
+              </li>
+            <% end %>
+
+          <li>
+            <%= link_to (fa_icon('shopping-cart') + " #{t('cart')} (#{current_cart.items.length})"), cart_path, class: "menu-item" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

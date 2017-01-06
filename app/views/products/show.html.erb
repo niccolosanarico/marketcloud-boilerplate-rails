@@ -1,5 +1,39 @@
-<ul>
-  <li><%= @product.name %></li>
-  <li><%= @product.description %></li>
-  <li><%= @product.price %></li>
-</ul>
+<%= meta_tag(:title, @product.meta['title']) %>
+<%= meta_tag(:description, @product.meta['description']) %>
+<%= meta_tag(:keywords, @product.meta['keywords']) %>
+
+<div class="row">
+  <div class="col-md-offset-1 col-md-3 col-sm-4 col-xs-4 img-for-product">
+    <%= image_tag @product.images.first, class:"img-responsive img-selected" %>
+    <% if @product.images.length > 1 %>
+      <% @product.images.each do |image| %>
+        <div class="col-sm-3 col-xs-6">
+          <%= image_tag image, class:"img-responsive img-available" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-md-6 col-sm-8 col-xs-8">
+    <ul class="list-unstyled">
+      <li style="border-bottom: 1px #EEE solid"><h4><%= @product.name %></h4></li>
+      <li class="margin-bottom-20px"><%= t('price') %>: <span style="color:red; font-size: 1.2em;"><%= pretty_money @product.price %></span> + <%= t('VAT') %></li>
+      <li class="margin-bottom-20px">
+        <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
+          <%= f.hidden_field :product_id, value: @product.id %>
+          <%= f.hidden_field :quantity, value: 1 %>
+          <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success" %>
+        <% end %>
+      </li>
+      <li><%= @product.description.html_safe %></li>
+      <li>
+        <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
+          <%= f.hidden_field :product_id, value: @product.id %>
+          <%= f.hidden_field :quantity, value: 1 %>
+          <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success" %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+
+</div>

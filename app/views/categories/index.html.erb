@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-2 col-sm-2 hidden-xs">
+    <% @category_roots.each do |root| %>
+      <%= (print_taxon root.build_taxon_tree).html_safe %>
+    <% end %>
+  </div>
+
+  <div class="col-md-10 col-sm-10">
+    <!-- TODO -->
+  </div>
+</div>
+
+<%= console %>
