@@ -28,6 +28,8 @@ gem 'figaro'
 gem "font-awesome-rails"
 # google analytics
 gem 'rack-tracker'
+# Added to make heroku happy
+gem 'pg', group: :production
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
