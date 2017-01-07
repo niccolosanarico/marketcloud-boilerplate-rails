@@ -1,6 +1,6 @@
-<%= meta_tag(:title, @product.meta['title']) %>
-<%= meta_tag(:description, @product.meta['description']) %>
-<%= meta_tag(:keywords, @product.meta['keywords']) %>
+<%= meta_tag(:title, @product.meta['title']) unless @product.meta.nil?  %>
+<%= meta_tag(:description, @product.meta['description']) unless @product.meta.nil? %>
+<%= meta_tag(:keywords, @product.meta['keywords']) unless @product.meta.nil? %>
 
 <div class="row">
   <div class="col-md-offset-1 col-md-3 col-sm-4 col-xs-4 img-for-product">
