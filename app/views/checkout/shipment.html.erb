@@ -24,8 +24,6 @@
     </div>
 
     <%= form_for :checkout, url: checkout_payment_path, method: :get, html: { class: "form-horizontal" } do |f| %>
-      <%= f.hidden_field :billing_address_id, value: @billing_address.id %>
-      <%= f.hidden_field :shipping_address_id, value: @shipping_address.id %>
 
       <div class="form-group col-md-12">
         <% @shippings.each do |s| %>

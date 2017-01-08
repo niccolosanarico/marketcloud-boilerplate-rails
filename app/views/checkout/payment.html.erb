@@ -21,7 +21,6 @@
   <div class="col-md-offset-1 col-md-8 col-sm-8 col-xs-12 margin-bottom-20px">
     <%= form_for :checkout, url: checkout_review_path, method: :get, id: "payment-form" do |f| %>
       <div id="dropin-container"></div>
-      <%= f.hidden_field :order_id, value: @order.id %>
 
       <div class="form-group pull-right">
         <%= f.submit value: "#{t('select_payment')} >", id: "paymentFormButton", class: "btn btn-default btn-success" %>
@@ -30,7 +29,7 @@
     <% end %>
   </div>
   <div class="col-md-3 col-sm-4 col-xs-12 margin-bottom-20px">
-    <%= render 'helpers/order_total', order: @order %>
+    <%= render 'helpers/cart_total' %>
   </div>
 </div>
 

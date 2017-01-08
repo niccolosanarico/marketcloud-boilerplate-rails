@@ -5,7 +5,9 @@ class AddressesController < ApplicationController
   end
 
   def create
-    Address.create(address_params)
+    if Address.create(address_params) == nil
+      raise Exception
+    end
 
     redirect_back(fallback_location: root_path)
   end

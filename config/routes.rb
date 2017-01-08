@@ -32,5 +32,7 @@ Rails.application.routes.draw do
   get 'orders/:id', to: 'orders#show', as: 'order'
 
   root to: 'products#index'
+
+  resources :account_activations, only: [:edit]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

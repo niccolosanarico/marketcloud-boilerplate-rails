@@ -1,4 +1,5 @@
 require_relative 'boot'
+require_relative '../lib/mcshop/exceptions'
 
 require "rails"
 # Pick the frameworks you want:
@@ -22,7 +23,7 @@ module Mcshop
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    Rails.application.configure do
+    Rails.application.configure do |config|
       config.middleware.use(Rack::Tracker) do
         handler :google_analytics, { tracker: "#{ENV['ga_code']}", enhanced_ecommerce: true }
       end

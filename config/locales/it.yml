@@ -78,7 +78,7 @@ it:
   sign_out: "Esci"
   pw_error: "La password non coincide con la conferma, per favore verifica"
   pw_error_length: "La password dovrebbe essere lunga almeno 8 caratteri"
-  new_user_welcome: "Grazie per esserti registrato!"
+  new_user_welcome: "Grazie per esserti registrato! Controlla la tua casella di posta per la mail di conferma."
   already_client: "Già cliente? Accedi!"
   not_client: "Non ancora cliente? Registrati!"
   all_category: "Tutte le categorie"
@@ -88,3 +88,12 @@ it:
   details: "Ulteriori dettagli"
   previous: "Precedente"
   next: "Successiva"
+  payment_error: "Si è verificato un errore con il pagamento e non abbiamo potuto addebitare l'acquisto. Riprova, o contatta il tuo istituto finanziario per maggiori informazioni"
+  generic_error: "Si è verificato un errore. Per favore riprova."
+  invalid_email: "L'indirizzo email inserito non è valido."
+  user_mailer:
+    account_activation:
+      subject: "Attivazione account"
+  account_activated: "Congratulazioni, hai attivato il tuo account!"
+  invalid_activation_link: "Il link è valido"
+  account_not_activated: "Non hai ancora attivatio il tuo account. Controlla la tua mail per il link di attivazione!"

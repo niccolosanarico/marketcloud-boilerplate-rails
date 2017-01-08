@@ -78,7 +78,7 @@ en:
   sign_out: "Sign out"
   pw_error: "Password and password confirmation do not match"
   pw_error_length: "Password should be at least 8 characters long"
-  new_user_welcome: "Welcome to the shop, thank you for registering!"
+  new_user_welcome: "Welcome to the shop, thank you for registering! Check your inbox for a confirmation email"
   already_client: "Already registered? Sign in!"
   not_client: "Not registered yet? Sign up now!"
   all_category: "All categories"
@@ -88,3 +88,12 @@ en:
   details: "Details"
   previous: "Previous"
   next: "Next"
+  payment_error: "There was an error with the payment and no amount was charged. Please try again or contact your financial institution for more info"
+  generic_error: "Error while completing the operation. Please try again."
+  invalid_email: "The email is invalid."
+  user_mailer:
+    account_activation:
+      subject: "Account activation"
+  account_activated: "Your account was successfully activated"
+  invalid_activation_link: "Not a valid activation link"
+  account_not_activated: "Your account has not been activated yet. Please check your email for activation link."

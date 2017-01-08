@@ -30,6 +30,8 @@ gem "font-awesome-rails"
 gem 'rack-tracker'
 # Added to make heroku happy
 gem 'pg', group: :production
+# secure password
+gem 'bcrypt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

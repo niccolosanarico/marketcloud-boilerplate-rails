@@ -17,6 +17,8 @@ class CheckoutController < ApplicationController
     @cart = Cart.find(current_cart.id)
     @addresses = Address.find_by_user(current_user.id)
 
+    puts "HERE BE DRAGONS - #{current_user.id} - #{@addresses}"
+    
     render :address
   end
 
@@ -32,20 +34,32 @@ class CheckoutController < ApplicationController
       }
     end
 
-    # Check for correct data
+    # Check for correct selection
     if shipment_params[:shipping_address].nil?
       flash[:error] = I18n.t("select_address_error")
       redirect_back(fallback_location: root_path) and return
     end
 
     @cart = Cart.find(current_cart.id)
-    @shipping_address = Address.find(shipment_params[:shipping_address])
+
+    # Add relevant information to session to create the order later on
+    begin
+      session[:shipping_address_id] = Address.find_and_check_user(shipment_params[:shipping_address], current_user.id).id
+    rescue Marketcloud::AddressNotFound
+      flash[:error] = I18n.t("select_address_error")
+      redirect_back(fallback_location: root_path) and return
+    end
 
     # Check whether the shipping and the billing are the same
-    if shipment_params[:billing_address]
-      @billing_address = Address.find(shipment_params[:billing_address])
-    else
-      @billing_address = @shipping_address
+    begin
+      if shipment_params[:billing_address]
+        session[:billing_address_id] = Address.find_and_check_user(shipment_params[:billing_address], current_user.id).id
+      else
+        session[:billing_address_id] = session[:shipping_address_id]
+      end
+    rescue Marketcloud::AddressNotFound
+      flash[:error] = I18n.t("select_address_error")
+      redirect_back(fallback_location: root_path) and return
     end
 
     #TODO: Compute the correct shipping options and costs
@@ -54,7 +68,6 @@ class CheckoutController < ApplicationController
     render :shipment
   end
 
-  # To complete this action you need to be logged in
   def payment
 
     # Record the checkout process
@@ -76,34 +89,45 @@ class CheckoutController < ApplicationController
 
 
     @payment = BraintreePayment.get_token(current_user.id)
+    @cart = Cart.find(current_cart.id)
 
-    # Now I can build the order, but first check that there is not an existing one
-    # TODO
-
-    @order = Order.create(current_user.id,
-                          current_cart.id.to_i,
-                          payment_params[:shipping_address_id].to_i,
-                          payment_params[:billing_address_id].to_i,
-                          payment_params[:shipping_id].to_i)
+    # Add relevant information to session to create the order later on
+    session[:shipping_id] = payment_params[:shipping_id].to_i
 
     render :payment
   end
 
   # Payment completed!
   def review
+    # Now create the order
 
-    @order = Order.find(review_params[:order_id])
-    @billing_address = Address.find(@order.billing_address['id'])
-    @shipping_address = Address.find(@order.shipping_address['id'])
-    @shipping = Shipping.find(@order.shipping_id)
-
-    # Depending on environment!
-    if Rails.env.development? || Rails.env.test?
-      @payment = Payment.create(review_params[:order_id].to_i, "fake-valid-no-billing-address-nonce")
+    if (session[:shipping_id] and session[:billing_address_id] and session[:shipping_address_id])
+      @order = Order.create(current_user.id,
+                            current_cart.id.to_i,
+                            session[:shipping_address_id],
+                            session[:billing_address_id],
+                            session[:shipping_id])
     else
-      @payment = Payment.create(review_params[:order_id].to_i, params[:payment_method_nonce])
+      flash[:error] = (I18n.t("generic_error"))
+      redirect_back(fallback_location: root_path) and return
     end
 
+    # Depending on environment!
+    begin
+      if Rails.env.development? || Rails.env.test?
+        @payment = Payment.create(@order.id, "fake-valid-no-billing-address-nonce")
+      else
+        @payment = Payment.create(@order.id, params[:payment_method_nonce])
+      end
+    rescue Marketcloud::BraintreeProcessorDeclinedError
+        flash[:error] = (I18n.t("payment_error"))
+        #TODO anything more?
+        redirect_back(fallback_location: root_path) and return
+    end
+
+    @billing_address = Address.find(session[:billing_address_id])
+    @shipping_address = Address.find(session[:shipping_address_id])
+    @shipping = Shipping.find(session[:shipping_id])
     @products = @order.products.map { |p| Product.new(p) }
 
     # Destroy the cart
@@ -148,8 +172,6 @@ class CheckoutController < ApplicationController
     def payment_params
       params.require(:checkout).permit(
         :cart_id,
-        :billing_address_id,
-        :shipping_address_id,
         :shipping_id
       )
     end

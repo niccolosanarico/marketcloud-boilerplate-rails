@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def new
     @user = User.new nil
   end
@@ -14,26 +15,26 @@ class UsersController < ApplicationController
   end
 
   def create
-    if !User.check_password(user_params[:password], user_params[:password_confirmation])
+
+    begin
+      @user = User.create(user_params[:name], user_params[:email], user_params[:password], user_params[:password_confirmation])
+    rescue Marketcloud::ExistingUserError
+      flash.now[:error] = I18n.t('existing_email')
+      render 'new' and return
+    rescue Mcshop::Exceptions::EmailNotValidError
+      flash.now[:error] = I18n.t('invalid_email')
+      render 'new' and return
+    rescue Mcshop::Exceptions::PasswordMatchError
       flash.now[:error] = I18n.t('pw_error')
       render 'new' and return
-    end
-
-    if user_params[:password].length < 8
+    rescue Mcshop::Exceptions::PasswordTooShortError
       flash.now[:error] = I18n.t('pw_error_length')
       render 'new' and return
     end
 
-    begin
-      @user = User.create(user_params[:name], user_params[:email], user_params[:password])
-    rescue Marketcloud::ExistingUserError
-      flash.now[:error] = I18n.t('existing_email')
-      render 'new' and return
-    end
-
     if @user
+      UserMailer.account_activation(@user).deliver_now
       flash[:success] = I18n.t('new_user_welcome')
-      sign_in @user
       redirect_to root_path
     else
       render 'new'

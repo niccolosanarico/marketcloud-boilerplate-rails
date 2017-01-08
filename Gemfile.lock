@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/niccolosanarico/marketcloud-ruby.git
-  revision: 5393259d93a7c800cc39ec4a23ba41a99f4bc055
+  revision: 2fdecdfe48681e922e175134e7ae6f1d4879a84e
   specs:
     marketcloud-ruby (0.1.0)
       faraday
@@ -53,6 +53,7 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.6.1)
       execjs
+    bcrypt (3.1.11)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -236,6 +237,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   bootstrap-sass (~> 3.3.6)
   breadcrumbs_on_rails
   byebug
