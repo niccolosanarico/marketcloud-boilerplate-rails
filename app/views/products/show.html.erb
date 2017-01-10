@@ -38,7 +38,7 @@
       </li>
 
       <li class="margin-bottom-20px">
-        <%= if variant.respond_to? stock_status; variant.stock_status end %>
+        <%= if variant.respond_to? :stock_status; variant.stock_status end %>
       </li>
 
 
