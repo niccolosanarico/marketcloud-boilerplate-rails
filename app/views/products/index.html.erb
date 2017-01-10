@@ -1,8 +1,21 @@
 <div class="row">
-  <% @products.each do |product| %>
+  <% @products.each_with_index do |product, i| %>
     <div class="col-md-3 col-sm-4 col-xs-6">
       <%= render 'helpers/product', product: product %>
     </div>
+
+    <% if i > 0 && (i % 4) == 0 %>
+      <div class="clearfix visible-md-block"></div>
+    <% end %>
+
+    <% if i > 0 && (i % 3) == 0 %>
+      <div class="clearfix visible-sm-block"></div>
+    <% end %>
+
+    <% if i > 0 && (i % 2) == 0 %>
+      <div class="clearfix visible-xs-block"></div>
+    <% end %>
+
   <% end %>
 
   <div class="col-md-offset-1 col-md-10
