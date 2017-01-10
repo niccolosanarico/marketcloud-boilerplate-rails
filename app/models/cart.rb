@@ -1,7 +1,7 @@
 class Cart < Marketcloud::Cart
 
   def total
-    items.reduce(0) { |total, i| i["price"]*i["quantity"] + total }
+    items.reduce(0) { |total, i| (i['has_variants'] ? i["variant"]["price"]*i["quantity"] : i["price"]*i["quantity"]) + total }
   end
 
   def vat

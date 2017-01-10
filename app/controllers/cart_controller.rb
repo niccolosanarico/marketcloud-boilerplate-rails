@@ -2,7 +2,11 @@ class CartController < ApplicationController
   include CartHelper
 
   def add
+
+    # TODO
+    # Check that a variant has been selected, and
     # Record addition in Google analytics
+
     product = Product.find(add_cart_params[:product_id])
 
     tracker do |t|
@@ -22,14 +26,14 @@ class CartController < ApplicationController
        }
     end
     # add item to the cart
-    current_cart.add!([{ product_id: add_cart_params[:product_id], quantity: add_cart_params[:quantity] }])
+    current_cart.add!([{ product_id: add_cart_params[:product_id], quantity: add_cart_params[:quantity], variant_id: add_cart_params[:variant_id] }])
     # and navigate to the cart
     redirect_to cart_path
   end
 
   def update
     # update an item quantity to the cart
-    current_cart.update!([{ product_id: add_cart_params[:product_id], quantity: add_cart_params[:quantity] }])
+    current_cart.update!([{ product_id: add_cart_params[:product_id], quantity: add_cart_params[:quantity], variant_id: add_cart_params[:variant_id] }])
     # and navigate to the cart
     redirect_to cart_path
   end
@@ -66,7 +70,7 @@ class CartController < ApplicationController
 
   private
     def add_cart_params
-      params.require(:cart).permit(:product_id, :quantity)
+      params.require(:cart).permit(:product_id, :quantity, :variant_id)
     end
 
     def remove_cart_params

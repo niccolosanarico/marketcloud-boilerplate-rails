@@ -2,37 +2,63 @@
 <%= meta_tag(:description, @product.meta['description']) unless @product.meta.nil? %>
 <%= meta_tag(:keywords, @product.meta['keywords']) unless @product.meta.nil? %>
 
+<% variant = @product.has_variants ? @product.variants.select { |v| v.id == @variant_id }.first : @product %>
+
 <div class="row">
-  <div class="col-md-offset-1 col-md-3 col-sm-4 col-xs-4 img-for-product">
-    <%= image_tag @product.images.first, class:"img-responsive img-selected" %>
-    <% if @product.images.length > 1 %>
-      <% @product.images.each do |image| %>
-        <div class="col-sm-3 col-xs-6">
-          <%= image_tag image, class:"img-responsive img-available" %>
-        </div>
-      <% end %>
+  <h3 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= variant.name %></h3>
+  <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12 img-for-product">
+    <%= image_tag variant.images.first, class:"img-responsive img-selected" %>
+    <% if variant.images.length > 1 %>
+      <div class="row">
+        <% variant.images.each do |image| %>
+          <div class="col-sm-3 col-xs-2">
+            <%= image_tag image, class:"img-responsive img-available" %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
 
-  <div class="col-md-6 col-sm-8 col-xs-8">
+  <div class="col-md-4 col-sm-6 col-xs-12">
     <ul class="list-unstyled">
-      <li style="border-bottom: 1px #EEE solid"><h4><%= @product.name %></h4></li>
-      <li class="margin-bottom-20px"><%= t('price') %>: <span style="color:red; font-size: 1.2em;"><%= pretty_money @product.price %></span> + <%= t('VAT') %></li>
-      <li class="margin-bottom-20px">
-        <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
-          <%= f.hidden_field :product_id, value: @product.id %>
-          <%= f.hidden_field :quantity, value: 1 %>
-          <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success" %>
-        <% end %>
+      <% if @product.has_variants %>
+
+        <%= form_for :variant, url: product_path, method: :get, html: { id: "switchVariant" } do |f| %>
+          <% @product.variantsDefinition.each do |k, var| %>
+            <div class="form-group">
+              <%= f.select(k.downcase, var, {selected: variant.send(k.downcase)}, onChange: "$('#switchVariant').submit()") %>
+            </div>
+          <% end %>
+        <% end #form %>
+
+      <% end %>
+
+      <li class="margin-bottom-20px"><%= t('price') %>: <span style="color:red; font-size: 1.2em;">
+        <%= pretty_money variant.price %></span> + <%= t('VAT') %>
       </li>
-      <li><%= @product.description.html_safe %></li>
-      <li>
-        <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
-          <%= f.hidden_field :product_id, value: @product.id %>
-          <%= f.hidden_field :quantity, value: 1 %>
-          <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success" %>
+
+
+      <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
+        <% if @product.has_variants %>
+          <%= f.hidden_field :product_id, value: variant.product_id %>
+          <%= f.hidden_field :variant_id, value: variant.id %>
+        <% else %>
+          <%= f.hidden_field :product_id, value: variant.id %>
         <% end %>
-      </li>
+
+        <%= f.hidden_field :quantity, value: 1 %>
+
+        <li class="form-group">
+          <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="col-md-4 col-sm-6 col-xs-12">
+    <ul class="list-unstyled">
+      <li><h4><%= t('product_details') %></h4></li>
+      <li><%= variant.description.html_safe %></li>
     </ul>
   </div>
 

@@ -55,6 +55,7 @@ it:
   order_num: "Ordine n."
   order_status: "Stato"
   your_order: "Il tuo ordine"
+  your_orders: "I tuoi ordini"
   quantity: "Quantità"
   checkout: "Procedi all'acquisto"
   add_items_to_cart: "Il carrello è vuoto, prosegui con gli acquisti!"
@@ -97,3 +98,4 @@ it:
   account_activated: "Congratulazioni, hai attivato il tuo account!"
   invalid_activation_link: "Il link è valido"
   account_not_activated: "Non hai ancora attivatio il tuo account. Controlla la tua mail per il link di attivazione!"
+  product_details: "Dettagli sul prodotto"

@@ -13,14 +13,14 @@
                     <strong><%= item["name"] %></strong>
                     <%= form_for :cart, url: cart_remove_path, method: :patch do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
-                      <%= f.hidden_field :quantity, value: item["quantity"] %>
                       <%= f.submit value: t('remove_from_cart'), class: "btn btn-danger btn-default btn-xs"%>
                     <% end %>
                   </td>
-                  <td  class="col-md-2" style="color: red"><%= pretty_money item["price"] %></td>
+                  <td  class="col-md-2" style="color: red"><%= pretty_money item['has_variants'] ? item['variant']["price"] : item["price"] %></td>
                   <td class="col-md-2">
                     <%= form_for :cart, url: cart_update_path, method: :patch do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
+                      <%= f.hidden_field :variant_id, value: item["variant_id"] %>
                       <%= f.text_field :quantity, value: item["quantity"], required: true %>
                       <%= f.submit value: t('update_cart'), class: "btn btn-info btn-default btn-xs"%>
                     <% end %>
