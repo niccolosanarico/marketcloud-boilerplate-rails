@@ -3,13 +3,13 @@ class CategoriesController < ApplicationController
 
   def show
     @page = params[:page] || 1
-    category = Category.find(params[:id])
+    @category = Category.find(params[:id])
 
-    @products = category.get_all_products(page: @page)
-    @pages = category.pages
+    @products = @category.get_all_products(page: @page)
+    @pages = @category.pages
     @category_roots = Category.get_roots
 
-    build_breadcrumbs(category)
+    build_breadcrumbs(@category)
   end
 
   def index

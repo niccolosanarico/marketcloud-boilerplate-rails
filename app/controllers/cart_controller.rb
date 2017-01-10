@@ -58,8 +58,9 @@ class CartController < ApplicationController
         value: 'removeFromCart'
       }
     end
+
     # add item to the cart
-    current_cart.remove!([{ product_id: remove_cart_params[:product_id] }])
+    current_cart.remove!([{ product_id: remove_cart_params[:product_id], variant_id: remove_cart_params[:variant_id] }])
     # and navigate to the cart
     redirect_to cart_path
   end
@@ -74,6 +75,6 @@ class CartController < ApplicationController
     end
 
     def remove_cart_params
-      params.require(:cart).permit(:product_id)
+      params.require(:cart).permit(:product_id, :variant_id)
     end
 end

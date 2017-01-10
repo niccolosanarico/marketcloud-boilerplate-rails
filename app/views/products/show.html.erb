@@ -5,7 +5,7 @@
 <% variant = @product.has_variants ? @product.variants.select { |v| v.id == @variant_id }.first : @product %>
 
 <div class="row">
-  <h3 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= variant.name %></h3>
+  <h3 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= "#{variant.name}" %></h3>
   <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12 img-for-product">
     <%= image_tag variant.images.first, class:"img-responsive img-selected" %>
     <% if variant.images.length > 1 %>
@@ -19,14 +19,14 @@
     <% end %>
   </div>
 
-  <div class="col-md-4 col-sm-6 col-xs-12">
+  <div class="col-md-3 col-sm-6 col-xs-12">
     <ul class="list-unstyled">
       <% if @product.has_variants %>
 
         <%= form_for :variant, url: product_path, method: :get, html: { id: "switchVariant" } do |f| %>
           <% @product.variantsDefinition.each do |k, var| %>
             <div class="form-group">
-              <%= f.select(k.downcase, var, {selected: variant.send(k.downcase)}, onChange: "$('#switchVariant').submit()") %>
+              <%= f.label "#{k}: " %> <%= f.select(k.downcase, var, {selected: variant.send(k.downcase)}, onChange: "$('#switchVariant').submit()") %>
             </div>
           <% end %>
         <% end #form %>
@@ -35,6 +35,10 @@
 
       <li class="margin-bottom-20px"><%= t('price') %>: <span style="color:red; font-size: 1.2em;">
         <%= pretty_money variant.price %></span> + <%= t('VAT') %>
+      </li>
+
+      <li class="margin-bottom-20px">
+        <%= variant.stock_status %>
       </li>
 
 
