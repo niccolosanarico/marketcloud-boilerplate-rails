@@ -17,26 +17,6 @@ class ProductsController < ApplicationController
     end
 
     @count, @pages = Product.count_and_pages
-
-    # Record product impressions in google analytics
-    if @products
-      tracker do |t|
-        @products.each_with_index do |product, i|
-          t.google_analytics :enhanced_ecommerce, {
-            type: 'addImpression',
-            id: product.id,
-            name: product.name,
-            sku: product.sku,
-            category: product.category().name,
-            price: product.price,
-            position: i
-          }
-          t.google_analytics :send, {
-            type: 'pageview'
-          }
-          end
-      end
-    end
   end
 
   private

@@ -100,3 +100,5 @@ en:
   account_not_activated: "Your account has not been activated yet. Please check your email for activation link."
   product_details: "Product details"
   view_variants: "Select your variant"
+  in_stock: "In stock"
+  out_of_stock: "Out of stock"

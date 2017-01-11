@@ -100,3 +100,5 @@ it:
   account_not_activated: "Non hai ancora attivatio il tuo account. Controlla la tua mail per il link di attivazione!"
   product_details: "Dettagli sul prodotto"
   view_variants: "Scegli la variante"
+  in_stock: "Disponibile"
+  out_of_stock: "Non disponibile"

@@ -6,12 +6,12 @@
 
 <div class="row">
   <h3 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= "#{variant.name}" %></h3>
-  <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12 img-for-product">
-    <%= image_tag variant.images.first, class:"img-responsive img-selected" %>
+  <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12 img-for-product margin-bottom-20px">
+    <%= image_tag variant.images.first, class:"img-responsive img-selected center-block" %>
     <% if variant.images.length > 1 %>
-      <div class="row">
+      <div class="row row-centered">
         <% variant.images.each do |image| %>
-          <div class="col-sm-3 col-xs-2">
+          <div class="col-sm-3 col-xs-2 col-centered">
             <%= image_tag image, class:"img-responsive img-available" %>
           </div>
         <% end %>
@@ -38,7 +38,7 @@
       </li>
 
       <li class="margin-bottom-20px">
-        <%= if variant.respond_to? :stock_status; variant.stock_status end %>
+        <%= if variant.respond_to? :stock_status; t(variant.stock_status) end %>
       </li>
 
 

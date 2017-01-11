@@ -3,36 +3,15 @@ class CheckoutController < ApplicationController
   before_action :signin, only: [:address, :shipment, :payment]
 
   def address
-    # Record the checkout process
-    tracker do |t|
-      t.google_analytics :enhanced_ecommerce, {
-        type: 'checkout',
-        step: 1
-      }
-      t.google_analytics :send, {
-        type: 'pageview'
-      }
-    end
-
     @cart = Cart.find(current_cart.id)
     @addresses = Address.find_by_user(current_user.id)
 
     puts "HERE BE DRAGONS - #{current_user.id} - #{@addresses}"
-    
+
     render :address
   end
 
   def shipment
-    # Record the checkout process
-    tracker do |t|
-      t.google_analytics :enhanced_ecommerce, {
-        type: 'checkout',
-        step: 2
-      }
-      t.google_analytics :send, {
-        type: 'pageview'
-      }
-    end
 
     # Check for correct selection
     if shipment_params[:shipping_address].nil?
@@ -69,17 +48,6 @@ class CheckoutController < ApplicationController
   end
 
   def payment
-
-    # Record the checkout process
-    tracker do |t|
-      t.google_analytics :enhanced_ecommerce, {
-        type: 'checkout',
-        step: 3
-      }
-      t.google_analytics :send, {
-        type: 'pageview'
-      }
-    end
 
     # Check for correct data
     if payment_params[:shipping_id].nil?
@@ -134,22 +102,6 @@ class CheckoutController < ApplicationController
     destroy_cart
 
     flash.now[:success] = (I18n.t("order_success"))
-
-    # Record the checkout process
-    tracker do |t|
-      t.google_analytics :enhanced_ecommerce, {
-        type: 'purchase',
-        id: @order.id,
-        revenue: @order.total,
-        tax: @order.taxes_total,
-        shipping: @order.shipping_total
-
-      }
-      t.google_analytics :send, {
-        type: 'pageview'
-      }
-    end
-
     render :review
   end
 

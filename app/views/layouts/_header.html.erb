@@ -23,7 +23,7 @@
                     </button>
                     <ul class="dropdown-menu">
                       <% Category.get_roots().each do |c| %>
-                        <li><%= link_to c.name, "#", class: "menu-item" %></li>
+                        <li><%= link_to c.name, "#", class: "search-item" %></li>
                       <% end %>
                     </ul>
                     <%= f.hidden_field :category, value:"all", id:'category_field'  %>

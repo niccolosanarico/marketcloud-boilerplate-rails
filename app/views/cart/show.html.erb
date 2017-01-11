@@ -8,13 +8,13 @@
   <div class="col-sm-8 col-xs-12 margin-bottom-20px">
     <% if @cart.items.length > 0 %>
       <div class="table-responsive">
-        <table class="table">
-          <% @cart.items.each do |item| %>
+        <table class="table table-hover">
+          <% @cart.items.each_with_index do |item, i| %>
             <div class="col-sm-12">
               <div class="col-sm-10">
                 <tr>
-                  <td class="col-md-2"><%=image_tag item["images"].first, class: "img-responsive" %></td>
-                  <td class="col-md-6">
+                  <td class="col-md-2 hidden-sm hidden-xs"><%=image_tag item["images"].first, class: "img-responsive" %></td>
+                  <td class="col-md-4">
                     <strong><%= item["name"] %></strong>
                     <%= form_for :cart, url: cart_remove_path, method: :patch do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
@@ -22,12 +22,28 @@
                       <%= f.submit value: t('remove_from_cart'), class: "btn btn-danger btn-default btn-xs"%>
                     <% end %>
                   </td>
-                  <td  class="col-md-2" style="color: red"><%= pretty_money item['has_variants'] ? item['variant']["price"] : item["price"] %></td>
-                  <td class="col-md-2">
+                  <td class="col-md-3" style="color: red"><%= pretty_money item['has_variants'] ? item['variant']["price"] : item["price"] %></td>
+                  <td class="col-md-3">
                     <%= form_for :cart, url: cart_update_path, method: :patch do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
                       <%= f.hidden_field :variant_id, value: item["variant_id"] %>
-                      <%= f.text_field :quantity, value: item["quantity"], required: true %>
+
+                      <div class="input-group">
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="<%= "input-number-#{i}" %>" min="1">
+                            <%= fa_icon "minus-square" %>
+                          </button>
+                        </div>
+
+                        <%= f.text_field :quantity, value: item["quantity"], required: true, class: "form-control input-number", id: "input-number-#{i}" %>
+
+                        <div class="input-group-btn">
+                          <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="<%= "input-number-#{i}" %>">
+                            <%= fa_icon "plus-square" %>
+                          </button>
+                        </div>
+                      </div>
+
                       <%= f.submit value: t('update_cart'), class: "btn btn-info btn-default btn-xs"%>
                     <% end %>
                   </td>

@@ -3,28 +3,6 @@ class CartController < ApplicationController
 
   def add
 
-    # TODO
-    # Check that a variant has been selected, and
-    # Record addition in Google analytics
-
-    product = Product.find(add_cart_params[:product_id])
-
-    tracker do |t|
-      t.google_analytics :enhanced_ecommerce, {
-        type: 'addProduct',
-        id: product.id,
-        name: product.name,
-        sku: product.sku,
-        category: product.category().name,
-        price: product.price
-      }
-       t.google_analytics :send, {
-         type: 'event',
-         category: 'button',
-         action: 'click',
-         value: 'addToCart'
-       }
-    end
     # add item to the cart
     current_cart.add!([{ product_id: add_cart_params[:product_id], quantity: add_cart_params[:quantity], variant_id: add_cart_params[:variant_id] }])
     # and navigate to the cart
@@ -41,24 +19,6 @@ class CartController < ApplicationController
   def remove
     # Record addition in Google analytics
     product = Product.find(remove_cart_params[:product_id])
-
-    tracker do |t|
-      t.google_analytics :enhanced_ecommerce, {
-        type: 'addProduct',
-        id: product.id,
-        name: product.name,
-        sku: product.sku,
-        category: product.category().name,
-        price: product.price
-      }
-      t.google_analytics :send, {
-        type: 'event',
-        category: 'button',
-        action: 'click',
-        value: 'removeFromCart'
-      }
-    end
-
     # add item to the cart
     current_cart.remove!([{ product_id: remove_cart_params[:product_id], variant_id: remove_cart_params[:variant_id] }])
     # and navigate to the cart

@@ -26,8 +26,6 @@ gem "marketcloud-ruby", :git => "git://github.com/niccolosanarico/marketcloud-ru
 gem 'figaro'
 # Fontawesome - love them
 gem "font-awesome-rails"
-# google analytics
-gem 'rack-tracker'
 # Added to make heroku happy
 gem 'pg', group: :production
 # secure password
