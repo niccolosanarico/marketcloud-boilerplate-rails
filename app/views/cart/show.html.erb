@@ -29,7 +29,7 @@
                       <%= f.hidden_field :variant_id, value: item["variant_id"] %>
 
                       <div class="input-group">
-                        <div class="input-group-btn">
+                        <div class="input-group-btn hidden-xs">
                           <button type="button" class="btn btn-default btn-number" data-type="minus" data-field="<%= "input-number-#{i}" %>" min="1">
                             <%= fa_icon "minus-square" %>
                           </button>
@@ -37,7 +37,7 @@
 
                         <%= f.text_field :quantity, value: item["quantity"], required: true, class: "form-control input-number", id: "input-number-#{i}" %>
 
-                        <div class="input-group-btn">
+                        <div class="input-group-btn hidden-xs">
                           <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="<%= "input-number-#{i}" %>">
                             <%= fa_icon "plus-square" %>
                           </button>
