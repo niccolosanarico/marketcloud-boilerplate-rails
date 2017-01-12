@@ -53,9 +53,12 @@
     <%= debug(params) if Rails.env.development? %>
 
     <script>
-    if (typeof(ga) === "function")
-      ga('send', 'pageview', (location.pathname + location.search));
-      console.info("Navigated to: " + location.pathname + location.search);
+      $(document).addEventListener('turbolinks:load', function(event) {
+        if (typeof(ga) === "function") {
+          ga('send', 'pageview', event.data.url);
+          console.info("Navigated to: " + event.data.url);
+        }
+      }
     </script>
   </body>
 </html>
