@@ -4,6 +4,21 @@
 
 <% variant = @product.has_variants ? @product.variants.select { |v| v.id == @variant_id }.first : @product %>
 
+<script>
+  ga('ec:addProduct',{
+   'id': '<%= variant.sku %>',
+   'name': '<%= @product.name %>',
+   'category': '<%= @product.category.name %>',
+   'variant': '<%= variant.name %>',
+   "price": "<%= variant.price %>",
+  });
+
+  ga('ec:setAction', 'detail');
+
+  // ga('send', 'pageview');
+</script>
+
+
 <div class="row">
   <h3 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= "#{variant.name}" %></h3>
   <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12 img-for-product margin-bottom-20px">
