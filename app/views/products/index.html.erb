@@ -3,10 +3,10 @@
 
     <script>
       ga("ec:addImpression", {
-        "id": '<%= @product.id %>',
-        "name": '<%= @product.name %>',
-        "price": '<%= @product.price %>',
-        "category": '<%= @product.category.name %>',
+        "id": '<%= product.sku %>',
+        "name": '<%= product.name %>',
+        "price": '<%= product.price %>',
+        "category": '<%= product.category.name %>',
         "position": i
       });
     </script>
