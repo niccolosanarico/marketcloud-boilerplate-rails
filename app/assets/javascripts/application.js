@@ -21,7 +21,6 @@
 // http://stackoverflow.com/questions/18770517/rails-4-how-to-use-document-ready-with-turbo-links
 $(document).on('turbolinks:load', function() {
     // Google Analytics
-    window.ga_debug = {trace: true};
     ga('send', 'pageview', window.location.pathname);
 
     // Address selection in cart
