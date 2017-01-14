@@ -1,16 +1,6 @@
 <div class="row">
   <% @products.each_with_index do |product, i| %>
 
-    <script>
-      ga("ec:addImpression", {
-        "id": '<%= product.sku %>',
-        "name": '<%= product.name %>',
-        "price": '<%= product.price %>',
-        "category": '<%= product.category.name %>',
-        "position": i
-      });
-    </script>
-
     <% if i > 0 && (i % 4) == 0 %>
       <div class="clearfix visible-md-block visible-lg-block"></div>
     <% end %>

@@ -19,7 +19,7 @@
                     <%= form_for :cart, url: cart_remove_path, method: :patch do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
                       <%= f.hidden_field :variant_id, value: item["variant_id"] %>
-                      <%= f.submit value: t('remove_from_cart'), class: "btn btn-danger btn-default btn-xs"%>
+                      <%= f.submit value: t('remove_from_cart'), class: "btn btn-danger btn-default btn-xs" %>
                     <% end %>
                   </td>
                   <td class="col-md-3" style="color: red"><%= pretty_money item['has_variants'] ? item['variant']["price"] : item["price"] %></td>

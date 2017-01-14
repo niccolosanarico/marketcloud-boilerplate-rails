@@ -1,6 +1,11 @@
 module SessionsHelper
 
     def sign_in(user)
+        # Analytics
+        Analytics.identify(
+          user_id: user.id,
+          traits: { email: "#{ user.email }" })
+
         session[:user_id] = user.id
     end
 
@@ -41,5 +46,9 @@ module SessionsHelper
       user = user.forget
       cookies.delete(:user_id)
       cookies.delete(:remember_token)
+    end
+
+    def ga_cookie
+      cookies["_ga"].match(/GA\d\.\d\.(\d+\.\d+)/)[1]
     end
 end

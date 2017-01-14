@@ -30,6 +30,8 @@ gem "font-awesome-rails"
 gem 'pg', group: :production
 # secure password
 gem 'bcrypt'
+# Segment.com
+gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

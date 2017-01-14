@@ -10,9 +10,26 @@ class CategoriesController < ApplicationController
     @category_roots = Category.get_roots
 
     build_breadcrumbs(@category)
+
+    # Analytics SEGMENT
+    # Record product list visit
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Product List Viewed',
+      properties: {
+        product: @products.map { |p| { product_id: p.id } },
+        category: @category.name
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      }
+    )
+
   end
 
-  def index
+  def index #unused
     # Category roots
     @category_roots = Category.get_roots
 

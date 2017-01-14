@@ -2,9 +2,32 @@ class CartController < ApplicationController
   include CartHelper
 
   def add
-
     # add item to the cart
     current_cart.add!([{ product_id: add_cart_params[:product_id], quantity: add_cart_params[:quantity], variant_id: add_cart_params[:variant_id] }])
+
+    # Analytics SEGMENT
+    # Record addition in segment
+    product = Product.find(add_cart_params[:product_id])
+    if product.has_variants
+      product = product.variants.select { |v| v.id == add_cart_params[:variant_id].to_i }.first
+    end
+
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Product Added',
+      properties: {
+        cart_id: current_cart.id,
+        product_id: product.id,
+        sku: product.sku,
+        name: product.name,
+        price: product.price
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
+
     # and navigate to the cart
     redirect_to cart_path
   end
@@ -17,16 +40,57 @@ class CartController < ApplicationController
   end
 
   def remove
-    # Record addition in Google analytics
-    product = Product.find(remove_cart_params[:product_id])
     # add item to the cart
     current_cart.remove!([{ product_id: remove_cart_params[:product_id], variant_id: remove_cart_params[:variant_id] }])
+
+    # Analytics SEGMENT
+    # Record removal in segment
+    product = Product.find(remove_cart_params[:product_id])
+    if remove_cart_params[:variant_id]
+      product = product.variants.select { |v| v.id == remove_cart_params[:variant_id].to_i }.first
+    end
+
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Product Removed',
+      properties: {
+        cart_id: current_cart.id,
+        product_id: product.id,
+        sku: product.sku,
+        name: product.name,
+        price: product.price
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
+
     # and navigate to the cart
     redirect_to cart_path
   end
 
   def show
     @cart = Cart.find(current_cart.id)
+
+    # Analytics SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Cart Viewed',
+      properties: {
+        cart_id: current_cart ? current_cart.id : -1,
+        products:
+          @cart.items.map do |item|
+            {
+            product_id: item["id"]
+            }
+          end
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
   end
 
   private

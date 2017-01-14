@@ -6,12 +6,60 @@ class CheckoutController < ApplicationController
     @cart = Cart.find(current_cart.id)
     @addresses = Address.find_by_user(current_user.id)
 
-    puts "HERE BE DRAGONS - #{current_user.id} - #{@addresses}"
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Checkout Started',
+      properties: {
+        revenue: @cart.total,
+        tax: @cart.vat,
+        currency: Marketcloud.configuration.application.currency_code,
+        products:
+          @cart.items.map do |item|
+            {
+            id: item["id"],
+            name: item["name"],
+            price: item["price"],
+            quantity: item["quantity"]
+            }
+          end
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
+
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Checkout Step Viewed',
+      properties: {
+        step: 1
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
 
     render :address
   end
 
   def shipment
+
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Checkout Step Completed',
+      properties: {
+        step: 1
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
 
     # Check for correct selection
     if shipment_params[:shipping_address].nil?
@@ -44,10 +92,30 @@ class CheckoutController < ApplicationController
     #TODO: Compute the correct shipping options and costs
     @shippings = Shipping.all()
 
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Checkout Step Viewed',
+      properties: {
+        step: 2
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
+
     render :shipment
   end
 
   def payment
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Checkout Step Completed',
+      properties: {
+        step: 2,
+        shippingMethod: payment_params[:shipping_id].to_i})
 
     # Check for correct data
     if payment_params[:shipping_id].nil?
@@ -62,11 +130,39 @@ class CheckoutController < ApplicationController
     # Add relevant information to session to create the order later on
     session[:shipping_id] = payment_params[:shipping_id].to_i
 
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Checkout Step Viewed',
+      properties: {
+        step: 3
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
+
     render :payment
   end
 
   # Payment completed!
   def review
+
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Payment Info Entered',
+      properties: {
+        shipping_method: session[:shipping_id],
+        step: 3
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
+
     # Now create the order
 
     if (session[:shipping_id] and session[:billing_address_id] and session[:shipping_address_id])
@@ -100,6 +196,26 @@ class CheckoutController < ApplicationController
 
     # Destroy the cart
     destroy_cart
+
+    # Analytics - SEGMENT
+    Analytics.track(
+      user_id: current_user ? current_user.id : -1,
+      event: 'Order Completed',
+      properties: {
+        orderId: @order.id,
+        revenue: @order.items_total,
+        shipping: @order.shipping_total,
+        tax: @order.taxes_total,
+        currency: Marketcloud.configuration.application.currency_code,
+        products: @products.map { |p|
+          Hash.new(name: p.name, id: p.id, sku: p.sku, price: p.price, quantity: @order.items.select { |i| i["id"] == p.id}.first["quantity"])
+        }
+      },
+      context: {
+        'Google Analytics' => {
+            clientId: ga_cookie
+        }
+      })
 
     flash.now[:success] = (I18n.t("order_success"))
     render :review

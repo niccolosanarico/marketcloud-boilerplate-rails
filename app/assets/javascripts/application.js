@@ -20,8 +20,9 @@
 // $(document).ready(function(){
 // http://stackoverflow.com/questions/18770517/rails-4-how-to-use-document-ready-with-turbo-links
 $(document).on('turbolinks:load', function() {
-    // Google Analytics
-    ga('send', 'pageview', window.location.pathname);
+
+    // Call SEGMENT pageview
+    analytics.page();
 
     // Address selection in cart
     $('#selectBillingAddress').hide();

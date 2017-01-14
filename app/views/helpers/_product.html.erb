@@ -1,18 +1,5 @@
 <div class="panel panel-primary panel-default">
 
-  <script>
-    ga("ec:addProduct", {
-      "id": "<%= product.sku %>",
-      "name": "<%= product.name %>",
-      "price": "<%= product.price %>",
-      "category": "<%= product.category.name %>"
-    });
-    ga("ec:setAction", "click", {
-      "list": "products"
-    });
-    </script>
-
-
   <div class="panel-body">
     <%= link_to(image_tag(product.images.first, class: "img-responsive center-block"), product_path(product.id)) unless product.images.nil? %>
   </div>
@@ -31,9 +18,9 @@
       <%= f.hidden_field :product_id, value: product.id %>
       <%= f.hidden_field :quantity, value: 1 %>
       <% if product.has_variants %>
-        <%= link_to t('view_variants'), product_path(product.id), class: "btn btn-default btn-success btn-sm", onClick: 'ga("send", "event", "ecommerce", "product see variant click", "");' %>
+        <%= link_to t('view_variants'), product_path(product.id), class: "btn btn-default btn-success btn-sm" %>
       <% else %>
-        <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success btn-sm", onClick: 'ga("send", "event", "ecommerce", "product add to cart click", "");' %>
+        <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success btn-sm" %>
       <% end %>
     <% end %>
   </div>
