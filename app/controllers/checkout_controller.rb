@@ -208,7 +208,11 @@ class CheckoutController < ApplicationController
         tax: @order.taxes_total,
         currency: Marketcloud.configuration.application.currency_code,
         products: @products.map { |p|
-          Hash.new(name: p.name, id: p.id, sku: p.sku, price: p.price, quantity: @order.items.select { |i| i["id"] == p.id}.first["quantity"])
+          if p.variants
+             { name: p.name, id: p.id, sku: p.sku, price: p.price, quantity: @order.items.select { |i| i["product_id"] == p.id }.first["quantity"] }
+          else
+             { name: p.name, id: p.id, sku: p.sku, price: p.price, quantity: @order.items.select { |i| i["product_id"] == p.id && i["variant_id"] == p.variant.variant_id }.first["quantity"] }
+          end
         }
       },
       context: {

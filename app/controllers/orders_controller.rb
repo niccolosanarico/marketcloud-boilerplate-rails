@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
     @shipping_address = Address.find(@order.shipping_address['id'])
     @shipping = Shipping.find(@order.shipping_id)
     @products = @order.products.map { |p| Product.new(p) }
+    @items = @order.items.map { |i| { product_id: i["product_id"], quantity: i["quantity"], variant_id: i["variant_id"] } }
 
   end
 

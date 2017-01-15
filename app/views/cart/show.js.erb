@@ -1,0 +1,3 @@
+// https://coderwall.com/p/kqb3xq/rails-4-how-to-partials-ajax-dead-easy
+
+$('#cart_side').html("<%= escape_javascript(render partial: 'helpers/cart_total', locals: {cart: @cart}).html_safe %>")

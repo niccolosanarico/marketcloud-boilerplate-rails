@@ -84,6 +84,27 @@ $(document).on('turbolinks:load', function() {
       } else {
           input.val(1);
       }
+
+      $(this).prop('disabled', true);
+      $(this).parents('form').submit();
+    });
+
+    // Make sure to re-enable buttons disabled when submitting the form
+    $("[id^=form_cart_item_]").on("ajax:success", function(e, data, status, xhr) {
+      $(this).find('.btn-number').prop('disabled', false);
+
+      // Update the cart
+      $.ajax({
+        url: "cart.js",
+        type: "GET",
+        success: function(data){
+            // Do nothing, the loaded js script will update the DOM.
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log("Status: " + textStatus);
+            console.log("Error: " + errorThrown);
+        }
+      });
     });
 
     $('.input-number').focusin(function(){
@@ -129,6 +150,5 @@ function setFooterStyle() {
     } else {
         $('#footer').css('margin-top', '');
     }
-    console.log("called");
     $('#footer').removeClass('invisible');
 }

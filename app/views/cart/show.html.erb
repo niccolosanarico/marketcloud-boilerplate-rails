@@ -15,7 +15,10 @@
                 <tr>
                   <td class="col-md-2 hidden-sm hidden-xs"><%=image_tag item["images"].first, class: "img-responsive" %></td>
                   <td class="col-md-4">
-                    <strong><%= item["name"] %></strong>
+                    <strong><%= item["name"] %></strong><br/>
+                    <% item["variantsDefinition"].each do |vk, vd| %>
+                      <p class="variant-dimension"><%= item["variant"]["#{vk}"] %></p>
+                    <% end %>
                     <%= form_for :cart, url: cart_remove_path, method: :patch do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
                       <%= f.hidden_field :variant_id, value: item["variant_id"] %>
@@ -24,7 +27,7 @@
                   </td>
                   <td class="col-md-3" style="color: red"><%= pretty_money item['has_variants'] ? item['variant']["price"] : item["price"] %></td>
                   <td class="col-md-3">
-                    <%= form_for :cart, url: cart_update_path, method: :patch do |f| %>
+                    <%= form_for :cart, url: cart_update_path, method: :patch, remote: true, html: { id: "form_cart_item_#{i}"} do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
                       <%= f.hidden_field :variant_id, value: item["variant_id"] %>
 
@@ -35,7 +38,11 @@
                           </button>
                         </div>
 
-                        <%= f.text_field :quantity, value: item["quantity"], required: true, class: "form-control input-number", id: "input-number-#{i}" %>
+                        <%= f.text_field  :quantity, value: item["quantity"],
+                                          required: true,
+                                          class: "form-control input-number",
+                                          id: "input-number-#{i}",
+                                          onblur: "$('#form_cart_item_#{i}').submit();"%>
 
                         <div class="input-group-btn hidden-xs">
                           <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="<%= "input-number-#{i}" %>">
@@ -69,7 +76,7 @@
     <% end %>
   </div>
 
-  <div class='col-sm-4 col-xs-12'>
-    <%= render 'helpers/cart_total' %>
+  <div class='col-sm-4 col-xs-12' id="cart_side">
+    <%= render 'helpers/cart_total', cart: @cart %>
   </div>
 </div>

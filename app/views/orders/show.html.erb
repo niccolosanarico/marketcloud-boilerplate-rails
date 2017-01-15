@@ -33,28 +33,43 @@
       <div class="col-sm-12 col-xs-12">
         <h4><%= t('your_order') %></h4>
       </h4>
-      <% @products.each do |product| %>
-        <div class="col-sm-12">
-          <ul class="list-unstyled">
-            <li>
-              <div class="col-sm-2"><%=image_tag product.images.first, class: "img-responsive" %></div>
-              <div class="col-sm-10">
-                <ul class="list-unstyled">
-                  <li><strong><%= product.name %></strong></li>
-                  <li style="color: red"><%= pretty_money product.price %></li>
-                  <li><%= t('quantity') %>: <%= @order.items.select { |i| i["product_id"] == product.id}.first["quantity"]%></li>
-                  <li>
-                    <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
-                      <%= f.hidden_field :product_id, value: product.id %>
-                      <%= f.hidden_field :quantity, value: 1 %>
-                      <%= f.submit value: t('purchase_again'), class:"btn btn-default btn-xs btn-info" %>
-                    <% end %>
-                  </li>
-              </div>
-            </li>
-          </ul>
-        </div>
-      <% end %>
+        <% @items.each do |item| %>
+          <% product = @products.select { |product| product.id == item[:product_id] && (product.has_variants ? product.variants.first.variant_id == item[:variant_id] : true )}.first %>
+          <% original_product = product %>
+          <% if product.has_variants; product = product.variants.first; end %>
+          <div class="col-sm-12">
+            <ul class="list-unstyled">
+              <li>
+                <div class="col-sm-2">
+                  <%=  image_tag product.images.first, class: "img-responsive" %>
+                </div>
+                <div class="col-sm-10">
+                  <ul class="list-unstyled">
+                    <li>
+                      <strong><%= link_to product.name, product_path(original_product.id) %></strong><br/>
+                      <% original_product.variantsDefinition.each do |vk, vd| %>
+                        <p class="variant-dimension"><%= "#{product.send("#{vk.downcase}")}" %></p>
+                      <% end %>
+                    </li>
+                    <li style="color: red">
+                      <%= pretty_money product.price %>
+                    </li>
+                    <li>
+                      <%= t('quantity') %>: <%= item[:quantity] %>
+                    </li>
+                    <li>
+                      <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
+                        <%= f.hidden_field :product_id, value: item[:product_id] %>
+                        <%= f.hidden_field :variant_id, value: item[:variant_id] %>
+                        <%= f.hidden_field :quantity, value: item[:quantity] %>
+                        <%= f.submit value: t('purchase_again'), class:"btn btn-default btn-xs btn-info" %>
+                      <% end %>
+                    </li>
+                </div>
+              </li>
+            </ul>
+          </div>
+        <% end %>
     </div>
   </div>
 </div>

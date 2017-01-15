@@ -120,6 +120,14 @@
   padding: 10px;
 }
 
+.variant-dimension {
+  background: #EEE;
+  font-size: 0.8em;
+  padding: 0.2em 1em;
+  display: inline-block;
+  border: darken(#EEE, 20%) solid 1px;
+}
+
 // ADDRESS
 .form-group.required .control-label:after {
   content:"*";
