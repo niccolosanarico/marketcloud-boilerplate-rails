@@ -28,7 +28,7 @@
       <div class="form-group col-md-12">
         <% @shippings.each do |s| %>
           <%= f.radio_button :shipping_id, s.id, :checked => false %>
-          <%= f.label "shipping", "#{s.name} - #{s.base_cost}" %>
+          <%= f.label "shipping", "#{s.name} - #{pretty_money s.cost_of_shipping(@cart)} + VAT #{Marketcloud.configuration.application.tax_rate}%" %>
         <% end %>
       </div>
 

@@ -71,7 +71,8 @@ class CheckoutController < ApplicationController
 
     # Add relevant information to session to create the order later on
     begin
-      session[:shipping_address_id] = Address.find_and_check_user(shipment_params[:shipping_address], current_user.id).id
+      @shipping_address = Address.find_and_check_user(shipment_params[:shipping_address], current_user.id)
+      session[:shipping_address_id] = @shipping_address.id
     rescue Marketcloud::AddressNotFound
       flash[:error] = I18n.t("select_address_error")
       redirect_back(fallback_location: root_path) and return
@@ -90,7 +91,7 @@ class CheckoutController < ApplicationController
     end
 
     #TODO: Compute the correct shipping options and costs
-    @shippings = Shipping.all()
+    @shippings = Shipping.find_shippings(@cart, @shipping_address)
 
     # Analytics - SEGMENT
     Analytics.track(
