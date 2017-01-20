@@ -11,7 +11,8 @@ class UsersController < ApplicationController
     end
 
     @user = User.find(params[:id])
-    @orders = Order.find_by_user(@user.id)
+    @addresses = Address.find_by_user(params[:id])
+    @orders = Order.find_by_user(params[:id])
   end
 
   def create

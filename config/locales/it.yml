@@ -55,6 +55,7 @@ it:
   order_status: "Stato"
   your_order: "Il tuo ordine"
   your_orders: "I tuoi ordini"
+  your_addresses: "I tuoi indirizzi"
   quantity: "Quantità"
   checkout: "Procedi all'acquisto"
   add_items_to_cart: "Il carrello è vuoto, prosegui con gli acquisti!"

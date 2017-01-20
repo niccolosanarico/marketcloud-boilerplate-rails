@@ -55,6 +55,7 @@ en:
   order_status: "Status"
   your_order: "Your order"
   your_orders: "Your orders"
+  your_addresses: "Your addresses"
   quantity: "Quantity"
   checkout: "Checkout"
   add_items_to_cart: "Add items to cart"

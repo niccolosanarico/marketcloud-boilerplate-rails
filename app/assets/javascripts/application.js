@@ -28,22 +28,15 @@ $(document).on('turbolinks:load', function() {
     $('#selectBillingAddress').hide();
 
     $('#sameShippingAndBilling').change(function(){
-        if(this.checked)
+        if(this.checked) {
             $('#selectBillingAddress').fadeOut('slow');
+            // Uncheck the form
+            $(this).parents('.form-horizontal').find('#selectBillingAddress .radio :radio').prop('checked', false);
+          }
         else
             $('#selectBillingAddress').fadeIn('slow');
 
     });
-
-
-    //image selection for a product //
-    $(".img-available").click(function(event) {
-       event.preventDefault();
-  	   var selImg = $(this).attr('src');
-       //working version - for multiple buttons - updates the search title //
-       $(this).parents('.img-for-product').find('.img-selected').attr("src", selImg);
-
-  	});
 
     //search button //
     $(".search-item").click(function(event) {
@@ -124,21 +117,72 @@ $(document).on('turbolinks:load', function() {
         }
     });
     $(".input-number").keydown(function (e) {
-            // Allow: backspace, delete, tab, escape, enter and .
-            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-                 // Allow: Ctrl+A
-                (e.keyCode == 65 && e.ctrlKey === true) ||
-                 // Allow: home, end, left, right
-                (e.keyCode >= 35 && e.keyCode <= 39)) {
-                     // let it happen, don't do anything
-                     return;
-            }
-            // Ensure that it is a number and stop the keypress
-            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                e.preventDefault();
-            }
-        });
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 
+    loadGallery(true, 'a.thumbnail');
+
+   //This function disables buttons when needed
+   function disableButtons(counter_max, counter_current){
+       $('#show-previous-image, #show-next-image').show();
+       if(counter_max == counter_current){
+           $('#show-next-image').hide();
+       } else if (counter_current == 1){
+           $('#show-previous-image').hide();
+       }
+   }
+
+   /**
+    *
+    * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+    * @param setClickAttr  Sets the attribute for the click handler.
+    */
+
+   function loadGallery(setIDs, setClickAttr){
+       var current_image,
+           selector,
+           counter = 0;
+
+       $('#show-next-image, #show-previous-image').click(function(){
+           if($(this).attr('id') == 'show-previous-image'){
+               current_image--;
+           } else {
+               current_image++;
+           }
+
+           selector = $('[data-image-id="' + current_image + '"]');
+           updateGallery(selector);
+       });
+
+       function updateGallery(selector) {
+           var $sel = selector;
+           current_image = $sel.data('image-id');
+           $('#image-gallery-image').attr('src', $sel.data('image'));
+           disableButtons(counter, $sel.data('image-id'));
+       }
+
+       if(setIDs === true){
+           $('[data-image-id]').each(function(){
+               counter++;
+               $(this).attr('data-image-id',counter);
+           });
+       }
+       $(setClickAttr).on('click',function(){
+           updateGallery($(this));
+       });
+   }
 });
 
 function setFooterStyle() {

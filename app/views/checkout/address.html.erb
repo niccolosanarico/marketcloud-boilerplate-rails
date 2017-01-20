@@ -27,19 +27,20 @@
       </div>
 
       <!-- Shipping address -->
+      <div class="shippingAddress">
+        <div class="col-sm-12">
+          <ul class="list-unstyled">
+            <% @addresses.each do |addr| %>
+              <%= render 'helpers/address/address', address: addr, form: f, radio_for: :shipping_address  %>
+            <% end %>
+          </ul>
+        </div>
 
-      <div class="col-sm-12">
-        <ul class="list-unstyled">
-          <% @addresses.each do |addr| %>
-            <%= render 'helpers/address/address', address: addr, form: f, radio_for: :shipping_address  %>
-          <% end %>
-        </ul>
-      </div>
-
-      <div class="col-sm-12">
-        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newAddressModal">
-          <%= t('add_address') %>
-        </button>
+        <div class="col-sm-12">
+          <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newAddressModal">
+            <%= t('add_address') %>
+          </button>
+        </div>
       </div>
 
       <div class="col-sm-12">

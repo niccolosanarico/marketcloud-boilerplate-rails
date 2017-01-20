@@ -186,7 +186,6 @@ class CheckoutController < ApplicationController
       end
     rescue Marketcloud::BraintreeProcessorDeclinedError
         flash[:error] = (I18n.t("payment_error"))
-        #TODO anything more?
         redirect_back(fallback_location: root_path) and return
     end
 

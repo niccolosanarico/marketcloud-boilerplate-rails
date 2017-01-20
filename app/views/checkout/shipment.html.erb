@@ -26,8 +26,8 @@
     <%= form_for :checkout, url: checkout_payment_path, method: :get, html: { class: "form-horizontal" } do |f| %>
 
       <div class="form-group col-md-12">
-        <% @shippings.each do |s| %>
-          <%= f.radio_button :shipping_id, s.id, :checked => false %>
+        <% @shippings.each_with_index do |s, i| %>
+          <%= f.radio_button :shipping_id, s.id, :checked => i==0 ? true : false %>
           <%= f.label "shipping", "#{s.name} - #{pretty_money s.cost_of_shipping(@cart)} + VAT #{Marketcloud.configuration.application.tax_rate}%" %>
         <% end %>
       </div>
