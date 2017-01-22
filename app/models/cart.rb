@@ -5,7 +5,7 @@ class Cart < Marketcloud::Cart
   end
 
   def vat
-    total * Marketcloud.configuration.application.tax_rate / 100
+    (total * Marketcloud.configuration.application.tax_rate).to_f / 100
   end
 
   def items_count
@@ -18,7 +18,7 @@ class Cart < Marketcloud::Cart
 
   def volume
     items.reduce(0) do
-      |total, i| (i["width"]*i["height"]*i["depth"]*i["quantity"])/(100*100*100) + total
+      |total, i| (i["width"]*i["height"]*i["depth"]*i["quantity"]).to_f/(100*100*100) + total
     end
   end
 end

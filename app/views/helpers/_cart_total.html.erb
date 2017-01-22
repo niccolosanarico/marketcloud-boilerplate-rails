@@ -5,9 +5,9 @@
   <div class="panel-body">
     <table class="table">
     <tr><td><%= "#{t('items_total')}: "%></td><td class="text-right cart_items_total"><%= pretty_money cart.total %></td></tr>
-    <tr><td><%= "#{t('VAT')}: "%></td><td class="text-right cart_vat"><%= pretty_money (cart.vat + @shipping_vat)  %></td></tr>
-    <tr><td><%= "#{t('shipping')}: "%></td><td class="text-right cart_shipping"><%= pretty_money @shipping_cost  %></td></tr>
-    <tr class="info"><td><h4><%= "#{t('total')}: "%></h4></td><td class="text-right cart_total"><h4><%= pretty_money(cart.total + cart.vat + @shipping_vat + @shipping_cost) %></h4></td></tr>
+    <tr><td><%= "#{t('VAT')}: "%></td><td class="text-right cart_vat"><%= pretty_money (cart.vat + (@shipping_vat.nil? ? 0 : @shipping_vat))  %></td></tr>
+    <tr><td><%= "#{t('shipping')}: "%></td><td class="text-right cart_shipping"><%= pretty_money (@shipping_cost.nil? ? 0 : @shipping_cost)  %></td></tr>
+    <tr class="info"><td><h4><%= "#{t('total')}: "%></h4></td><td class="text-right cart_total"><h4><%= pretty_money(cart.total + cart.vat + (@shipping_vat.nil? ? 0 : @shipping_vat) + (@shipping_cost.nil? ? 0 : @shipping_cost)) %></h4></td></tr>
     </table>
   </div>
 </div>

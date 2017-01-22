@@ -8,7 +8,7 @@ class Shipping < Marketcloud::Shipping
     shippings = Shipping.all
 
     selectable_shippings = shippings.select do |s|
-      max_volume = (s.max_width * s.max_height * s.max_depth) / (100*100*100)
+      max_volume = (s.max_width * s.max_height * s.max_depth).to_f / (100*100*100)
 
       if (cart.volume <= max_volume and cart.weight <= s.max_weight and cart.weight > s.min_weight and s.country_served?(shipping_address.country))
         true

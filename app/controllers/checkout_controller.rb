@@ -129,7 +129,7 @@ class CheckoutController < ApplicationController
     shipping = Shipping.find(payment_params[:shipping_id])
 
     @shipping_cost = (shipping ? shipping.cost_of_shipping(@cart) : 0)
-    @shipping_vat = (shipping ? shipping.cost_of_shipping(@cart) * Marketcloud.configuration.application.tax_rate/100 : 0)
+    @shipping_vat = (shipping ? (shipping.cost_of_shipping(@cart) * Marketcloud.configuration.application.tax_rate).to_f/100 : 0)
 
     # Add relevant information to session to create the order later on
     session[:shipping_id] = shipping.id
@@ -179,6 +179,9 @@ class CheckoutController < ApplicationController
     @shipping_address = Address.find(session[:shipping_address_id])
     @shipping = Shipping.find(session[:shipping_id])
     @cart = Cart.find(current_cart.id)
+
+    @shipping_cost = (@shipping ? @shipping.cost_of_shipping(@cart) : 0)
+    @shipping_vat = (@shipping ? (@shipping.cost_of_shipping(@cart) * Marketcloud.configuration.application.tax_rate).to_f/100 : 0)
 
     # Analytics - SEGMENT
     Analytics.track(
