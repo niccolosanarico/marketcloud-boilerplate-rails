@@ -49,6 +49,6 @@ module SessionsHelper
     end
 
     def ga_cookie
-      cookies["_ga"].match(/GA\d\.\d\.(\d+\.\d+)/)[1]
+      cookies["_ga"] ? cookies["_ga"].match(/GA\d\.\d\.(\d+\.\d+)/)[1] : nil
     end
 end
