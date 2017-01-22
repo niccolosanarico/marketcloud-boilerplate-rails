@@ -12,4 +12,8 @@ class Product < Marketcloud::Product
       this
     end
   end
+
+  def to_param
+    "#{id}-#{slug}"
+  end
 end

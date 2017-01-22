@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/niccolosanarico/marketcloud-ruby.git
-  revision: 0d7ba12620a8e3b008f4b871f02e73106d4dd7dc
+  revision: fa1583e88262f565facdae4cecd5681924f99a1f
   specs:
     marketcloud-ruby (0.1.0)
       faraday
@@ -196,7 +196,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    spring (2.0.0)
+    spring (2.0.1)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)

@@ -59,4 +59,7 @@ class Category < Marketcloud::Category
     return (product.category_id == category.id) || belongs
   end
 
+  def to_param
+    "#{id}-#{name}"
+  end
 end

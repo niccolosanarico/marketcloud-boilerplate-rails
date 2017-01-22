@@ -102,3 +102,6 @@ en:
   view_variants: "Select your variant"
   in_stock: "In stock"
   out_of_stock: "Out of stock"
+  see_more: 'Details'
+  confirm: 'Confirm'
+  item: 'Item'

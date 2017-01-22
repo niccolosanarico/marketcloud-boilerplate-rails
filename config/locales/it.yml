@@ -102,3 +102,6 @@ it:
   view_variants: "Scegli la variante"
   in_stock: "Disponibile"
   out_of_stock: "Non disponibile"
+  see_more: 'Dettagli'
+  confirm: 'Conferma'
+  item: 'Oggetto'

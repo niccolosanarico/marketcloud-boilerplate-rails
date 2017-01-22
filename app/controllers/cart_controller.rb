@@ -53,7 +53,7 @@ class CartController < ApplicationController
     # Analytics SEGMENT
     # Record removal in segment
     product = Product.find(remove_cart_params[:product_id])
-    if remove_cart_params[:variant_id]
+    if remove_cart_params[:variant_id].to_i > 0
       product = product.variants.select { |v| v.id == remove_cart_params[:variant_id].to_i }.first
     end
 
@@ -103,7 +103,7 @@ class CartController < ApplicationController
 
         render :show
       }
-      
+
       format.js   {}
       format.json { render json: @cart }
     end

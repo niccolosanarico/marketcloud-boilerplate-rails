@@ -1,60 +1,117 @@
 <div class="row">
-  <div class="col-md-12">
-    <h3><%= t('order_details') %></h3>
-    <p><%= t('ordered_on') %> <%= l( Time.at(@order.created_at/1000).to_datetime, format: '%e %B %Y') %> | <%= t('order_num') %> <%= @order.id %> | <%= t('order_status') %>: <%= @order.status %> </p>
+  <div class="col-md-offset-1 col-md-7 col-sm-8 col-xs-12 margin-bottom-20px">
+    <div class="col-sm-3 col-xs-6">
+      <div class="text-center stage-block">
+        <strong>1. <%= t('address') %> </strong>
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+      <div class="text-center stage-block">
+        <strong>2. <%= t('shipment') %></strong>
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+      <div class="text-center stage-block">
+        <strong>3. <%= t('payment') %></strong>
+      </div>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+      <div class="bg-info text-center stage-block">
+        <strong>4. <%= t('confirm') %></strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-offset-2 col-lg-10
+                col-md-offset-1 col-md-11
+                col-sm-offset-1 col-sm-11 col-xs-10">
+      <h2><%= t('your_order') %></h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-5 col-lg-offset-2
+              col-md-8
+              col-sm-8
+              col-xs-12 margin-bottom-20px">
+
     <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid #EEE; padding: 10px 5px;">
       <div class="col-md-4 col-sm-4 col-xs-6">
         <ul class="list-unstyled">
           <li><strong><%= t('shipping_address') %></strong></li>
-          <li><%= @order.shipping_address["full_name"] %></li>
-          <li><%= @order.shipping_address["address1"] %></li>
-          <li><%= @order.shipping_address["address2"] %></li>
-          <li><%= "#{@order.shipping_address["city"]}, #{@order.shipping_address["postal_code"]}" %></li>
-          <li><%= "#{@order.shipping_address["country"]}" %></li>
+          <li><%= @shipping_address.full_name %></li>
+          <li><%= @shipping_address.address1 %></li>
+          <li><%= @shipping_address.address2 %></li>
+          <li><%= "#{@shipping_address.city}, #{@shipping_address.postal_code}" %></li>
+          <li><%= "#{@shipping_address.country}" %></li>
         </ul>
       </div>
       <div class="col-md-4 col-sm-4 col-xs-6">
         <ul class="list-unstyled">
           <li><strong><%= t('billing_address') %></strong></li>
-          <li><%= @order.billing_address["full_name"] %></li>
-          <li><%= @order.billing_address["VAT"] %></li>
-          <li><%= @order.billing_address["address1"] %></li>
-          <li><%= @order.billing_address["address2"] %></li>
-          <li><%= "#{@order.billing_address["city"]}, #{@order.billing_address["postal_code"]}" %></li>
-          <li><%= "#{@order.billing_address["country"]}" %></li>
+          <li><%= @billing_address.full_name %></li>
+          <li><%= @billing_address.vat %></li>
+          <li><%= @billing_address.address1 %></li>
+          <li><%= @billing_address.address2 %></li>
+          <li><%= "#{@billing_address.city}, #{@billing_address.postal_code}" %></li>
+          <li><%= "#{@billing_address.country}" %></li>
         </ul>
       </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <%= render 'helpers/order_total', order: @order %>
+      <div class="col-md-4 col-sm-4 col-xs-6">
+        <ul class="list-unstyled">
+          <li><strong><%= t('shipping') %></strong></li>
+          <li><%= @shipping.name %></li>
+        </ul>
       </div>
     </div>
 
-    <div class="col-md-12 col-sm-12 col-xs-12" style="border: 1px solid #EEE; padding: 10px 5px; margin-top: 10px;">
-      <div class="col-sm-12 col-xs-12">
-        <h4><%= t('your_order') %></h4>
-      </h4>
-      <% @products.each do |product| %>
-        <div class="col-sm-12">
-          <ul class="list-unstyled">
-            <li>
-              <div class="col-sm-2"><%=image_tag product.images.first, class: "img-responsive" %></div>
-              <div class="col-sm-10">
-                <ul class="list-unstyled">
-                  <li><strong><%= product.name %></strong></li>
-                  <li style="color: red"><%= pretty_money product.price %></li>
-                  <li><%= t('quantity') %>: <%= @order.items.select { |i| i["product_id"] == product.id}.first["quantity"]%></li>
-                  <li>
-                    <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
-                      <%= f.hidden_field :product_id, value: product.id %>
-                      <%= f.hidden_field :quantity, value: 1 %>
-                      <%= f.submit value: t('purchase_again'), class:"btn btn-default btn-xs btn-info" %>
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <thead>
+            <div class="col-sm-12">
+              <tr>
+                <th class="col-md-4"><%= t('item') %></th>
+                <th class="col-md-3"><%= t('price') %></th>
+                <th class="col-md-3"><%= t('quantity') %></th>
+              </tr>
+            </div>
+          </thead>
+          <tbody>
+            <% @cart.items.each_with_index do |item, i| %>
+              <div class="col-sm-12">
+                <tr>
+                  <td class="col-md-4">
+                    <strong><%= item["name"] %></strong><br/>
+                    <% if !item["variantsDefinition"].nil? %>
+                      <% item["variantsDefinition"].each do |vk, vd| %>
+                        <p class="variant-dimension"><%= item["variant"]["#{vk}"] %></p>
+                      <% end %>
                     <% end %>
-                  </li>
+                  </td>
+                  <td class="col-md-3" style="color: red"><%= pretty_money item['has_variants'] ? item['variant']["price"] : item["price"] %></td>
+                  <td class="col-md-3"><%= item["quantity"] %></td>
+                </tr>
               </div>
-            </li>
-          </ul>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <%= form_for :checkout, url: checkout_confirm_path, method: :get do |f| %>
+        <div class="pull-right">
+          <%= f.submit value: t('confirm'), class: "btn btn-default btn-success"%>
         </div>
       <% end %>
     </div>
+
+  </div>
+
+  <div class='col-lg-3 col-sm-4 col-xs-12' id="cart_side">
+    <%= render 'helpers/cart_total', cart: @cart %>
   </div>
 </div>

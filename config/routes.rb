@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'checkout/payment', to: 'checkout#payment'
   get 'checkout/address', to: 'checkout#address'
   get 'checkout/review', to: 'checkout#review'
+  get 'checkout/confirm', to: 'checkout#confirm'
 
   patch 'cart/add', to: 'cart#add'
   patch 'cart/remove', to: 'cart#remove'

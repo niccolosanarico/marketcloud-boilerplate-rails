@@ -47,8 +47,10 @@
                   <ul class="list-unstyled">
                     <li>
                       <strong><%= link_to product.name, product_path(original_product.id) %></strong><br/>
-                      <% original_product.variantsDefinition.each do |vk, vd| %>
-                        <p class="variant-dimension"><%= "#{product.send("#{vk.downcase}")}" %></p>
+                      <% if original_product.has_variants %>
+                        <% original_product.variantsDefinition.each do |vk, vd| %>
+                          <p class="variant-dimension"><%= "#{product.send("#{vk.downcase}")}" %></p>
+                        <% end %>
                       <% end %>
                     </li>
                     <li style="color: red">

@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def show
-    @product = Product.find(params[:id])
+    @product = Product.find(params[:id].to_i)
     @variant_id = params[:variant] ? @product.find_variant_id(params[:variant]).first.id : 1
     add_breadcrumb "Home", :root_path
     build_breadcrumbs(Category.find(@product.category_id))

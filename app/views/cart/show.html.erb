@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
-    <h2><%= t('cart_recap') %></h2>
+    <h2><%= t('your_order') %></h2>
   </div>
 </div>
 
@@ -16,8 +16,10 @@
                   <td class="col-md-2 hidden-sm hidden-xs"><%=image_tag item["images"].first, class: "img-responsive" %></td>
                   <td class="col-md-4">
                     <strong><%= item["name"] %></strong><br/>
-                    <% item["variantsDefinition"].each do |vk, vd| %>
-                      <p class="variant-dimension"><%= item["variant"]["#{vk}"] %></p>
+                    <% if !item["variantsDefinition"].nil? %>
+                      <% item["variantsDefinition"].each do |vk, vd| %>
+                        <p class="variant-dimension"><%= item["variant"]["#{vk}"] %></p>
+                      <% end %>
                     <% end %>
                     <%= form_for :cart, url: cart_remove_path, method: :patch do |f| %>
                       <%= f.hidden_field :product_id, value: item["id"] %>
