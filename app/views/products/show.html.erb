@@ -2,7 +2,7 @@
 <%= meta_tag(:description, @product.meta['description']) unless @product.meta.nil? %>
 <%= meta_tag(:keywords, @product.meta['keywords']) unless @product.meta.nil? %>
 
-<% variant = @product.has_variants ? @product.variants.select { |v| v.id == @variant_id }.first : @product %>
+<% variant = (@product.has_variants && @variant_id) ? @product.variants.select { |v| v.id == @variant_id }.first : @product %>
 
 <div class="row">
   <h1 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= "#{variant.name}" %></h1>
