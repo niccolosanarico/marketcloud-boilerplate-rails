@@ -64,7 +64,7 @@
         <%= f.hidden_field :quantity, value: 1 %>
 
         <li class="form-group">
-          <%= f.submit value: t('add_to_cart'), class: "btn btn-default btn-success" %>
+          <%= f.submit value: t('add_to_cart'), data: { disable_with: t('wait')}, class: "btn btn-default btn-success" %>
         </li>
       <% end %>
     </ul>
@@ -73,7 +73,7 @@
   <div class="col-md-4 col-sm-6 col-xs-12">
     <ul class="list-unstyled">
       <li><h4><%= t('product_details') %></h4></li>
-      <li><%= variant.description.html_safe %></li>
+      <li><%= if variant.description; variant.description.html_safe; end %></li>
     </ul>
   </div>
 

@@ -35,7 +35,7 @@
         </div>
 
         <div id="form-group">
-          <%= f.submit t('sign_up'), class: "btn btn-primary" %>
+          <%= f.submit t('sign_up'), data: { disable_with: t('wait')}, class: "btn btn-primary" %>
         </div>
 
       <% end %>

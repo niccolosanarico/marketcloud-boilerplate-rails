@@ -104,7 +104,7 @@
     <div class="col-sm-12">
       <%= form_for :checkout, url: checkout_confirm_path, method: :get do |f| %>
         <div class="pull-right">
-          <%= f.submit value: t('confirm'), class: "btn btn-default btn-success"%>
+          <%= f.submit value: t('confirm'), data: { disable_with: t('wait')}, class: "btn btn-default btn-success"%>
         </div>
       <% end %>
     </div>

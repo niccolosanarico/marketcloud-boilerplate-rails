@@ -60,7 +60,7 @@
             <a href="#" class="dropdown-toggle menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= t('categories') %> <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <% Category.get_roots().each do |c| %>
-                <li><%= link_to c.name, category_path(c.id), class: "menu-item" %></li>
+                <li><%= link_to c.name, category_path(c), class: "menu-item" %></li>
               <% end %>
             </ul>
           <!-- <li class="active"><a href="#">Chi Siamo <span class="sr-only">(current)</span></a></li> -->

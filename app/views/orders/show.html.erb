@@ -64,7 +64,7 @@
                         <%= f.hidden_field :product_id, value: item[:product_id] %>
                         <%= f.hidden_field :variant_id, value: item[:variant_id] %>
                         <%= f.hidden_field :quantity, value: item[:quantity] %>
-                        <%= f.submit value: t('purchase_again'), class:"btn btn-default btn-xs btn-info" %>
+                        <%= f.submit value: t('purchase_again'), data: { disable_with: t('wait')}, class:"btn btn-default btn-xs btn-info" %>
                       <% end %>
                     </li>
                 </div>
