@@ -5,12 +5,12 @@
 <% variant = @product.has_variants ? @product.variants.select { |v| v.id == @variant_id }.first : @product %>
 
 <div class="row">
-  <h3 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= "#{variant.name}" %></h3>
+  <h1 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= "#{variant.name}" %></h1>
   <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12 img-for-product margin-bottom-20px">
 
-    <%= link_to image_tag(variant.images.first, class:"img-responsive img-selected center-block"), "#",
+    <%= link_to image_tag(variant.images.first, class:"img-responsive img-selected center-block", alt: "#{variant.name}"), "#",
         class: "thumbnail", data: {
-              image_id:"", toggle:"modal", title:"This is my title",
+              image_id:"", toggle:"modal", title:"#{variant.name}",
               image:"#{variant.images.first}",
               target:"#image-gallery"} %>
 
@@ -21,7 +21,7 @@
 
             <%= link_to image_tag(image, class:"img-responsive img-selected center-block"), "#",
                 class: "thumbnail", data: {
-                      image_id:"", toggle:"modal", title:"This is my title",
+                      image_id:"", toggle:"modal", title:"#{variant.name}",
                       image:"#{image}",
                       target:"#image-gallery"} %>
           </div>

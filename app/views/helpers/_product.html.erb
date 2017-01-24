@@ -1,19 +1,19 @@
 <div class="panel panel-primary panel-default">
 
   <div class="panel-body">
-    <%= link_to(image_tag(product.images.first, class: "img-responsive center-block"), product_path(product)) unless product.images.nil? %>
+    <%= link_to(image_tag(product.images.first, class: "img-responsive center-block", alt: "#{product.name}"), product_path(product), {title: product.name}) unless product.images.nil? %>
   </div>
 
   <div class="panel-footer">
     <ul class="list-unstyled">
       <li class="margin-bottom-10px">
-        <h4 class="panel-title hidden-sm hidden-md hidden-lg" title="<%= product.name %>">
+        <h3 class="panel-title hidden-sm hidden-md hidden-lg" title="<%= product.name %>">
           <%= link_to truncate(product.name, :length   => 30, :separator => /\w/,
-                                   :omission => "..."), product_path(product) %>
-        </h4>
-        <h4 class="panel-title hidden-xs" title="<%= product.name %>">
-          <%= link_to product.name, product_path(product) %>
-        </h4>
+                                   :omission => "..."), product_path(product), {title: product.name} %>
+        </h3>
+        <h3 class="panel-title hidden-xs" title="<%= product.name %>">
+          <%= link_to product.name, product_path(product), {title: product.name} %>
+        </h3>
       </li>
       <li class="margin-bottom-10px">
         <strong><%= pretty_money product.price %></strong><span class="smaller_print"><%= " + #{t('VAT')} #{Marketcloud.configuration.application.tax_rate}%" %></span>
@@ -22,7 +22,7 @@
         <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
           <%= f.hidden_field :product_id, value: product.id %>
           <%= f.hidden_field :quantity, value: 1 %>
-          <%= link_to t('see_more'), product_path(product), class: "btn btn-default btn-success btn-sm pull-left" %>
+          <%= link_to t('see_more'), product_path(product), class: "btn btn-default btn-success btn-sm pull-left", title: "#{t('see_more')}: #{product.name}" %>
           <% if !product.has_variants %>
             <%= f.button( type: 'submit', class: "btn btn-default btn-info btn-sm pull-right") do %>
               <%= t('add_to_cart') %>
