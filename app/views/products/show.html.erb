@@ -45,7 +45,7 @@
       <% end %>
 
       <li class="margin-bottom-20px"><%= t('price') %>: <span style="color:red; font-size: 1.2em;">
-        <%= pretty_money variant.price %></span> + <%= "#{t('VAT')} #{Marketcloud.configuration.application.tax_rate}%" %>
+        <%= pretty_money variant.price %></span><%= print_vat(:products) %>
       </li>
 
       <li class="margin-bottom-20px">

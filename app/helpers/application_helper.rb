@@ -34,6 +34,13 @@ module ApplicationHelper
     sprintf "#{Marketcloud.configuration.application.currency_code} %.2f", amount
   end
 
+  # VAT printer
+  def print_vat(target)
+    if Marketcloud.configuration.application.send("vat_for_#{target}")
+      sprintf " + #{t('VAT')} #{Marketcloud.configuration.application.tax_rate}%"
+    end
+  end
+
   # Manage content tags
 
   def meta_tag(tag, text)

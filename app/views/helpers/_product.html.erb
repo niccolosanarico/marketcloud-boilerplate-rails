@@ -16,7 +16,7 @@
         </h3>
       </li>
       <li class="margin-bottom-10px">
-        <strong><%= pretty_money product.price %></strong><span class="smaller_print"><%= " + #{t('VAT')} #{Marketcloud.configuration.application.tax_rate}%" %></span>
+        <strong><%= pretty_money product.price %></strong><span class="smaller_print"><%= print_vat(:products) %></span>
       </li>
       <li><div>
         <%= form_for :cart, url: cart_add_path, method: :patch do |f| %>
