@@ -95,6 +95,8 @@ en:
   user_mailer:
     account_activation:
       subject: "Account activation"
+    password_reset:
+      subjet: "Password reset"
   account_activated: "Your account was successfully activated"
   invalid_activation_link: "Not a valid activation link"
   account_not_activated: "Your account has not been activated yet. Please check your email for activation link."
@@ -106,3 +108,9 @@ en:
   confirm: 'Confirm'
   item: 'Item'
   wait: 'Wait..'
+  forgot_password: "(Forgot password)"
+  forgotten_password: "Forgot password"
+  submit: "Submit"
+  reset_sent: "Email sent with password reset instructions"
+  email_not_found: "Email address not found"
+  reset_password: "Reset password"

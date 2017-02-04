@@ -7,7 +7,10 @@ class User < Marketcloud::User
                 :activated, # status is a custom field used to check the confirmation cycle => 1. unconfirmed 2. confirmed
                 :activation_digest,
                 :activation_token,
-                :activated_at
+                :activated_at,
+                :reset_digest,
+                :reset_token,
+                :reset_sent_at
 
   def initialize(attributes)
     super(attributes)
@@ -90,4 +93,15 @@ class User < Marketcloud::User
     self.activation_token  = User.new_token
     self.activation_digest = User.digest(activation_token)
   end
+
+  def create_reset_digest
+    self.reset_token  = User.new_token
+    update!(options: { reset_digest:  User.digest(reset_token), reset_sent_at: Time.zone.now})
+  end
+
+  #Returns true if a password reset has expired.
+  def password_reset_expired?
+     reset_sent_at < 24.hours.ago
+  end
+  
 end
