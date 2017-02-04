@@ -96,7 +96,7 @@ en:
     account_activation:
       subject: "Account activation"
     password_reset:
-      subjet: "Password reset"
+      subject: "Password reset"
   account_activated: "Your account was successfully activated"
   invalid_activation_link: "Not a valid activation link"
   account_not_activated: "Your account has not been activated yet. Please check your email for activation link."
