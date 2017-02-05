@@ -5,7 +5,6 @@ module CartHelper
       if cart == nil
         cart = Cart.create
         session[:cart_id] = cart.id
-        cart
       end
       cart
     else
@@ -15,7 +14,6 @@ module CartHelper
     end
   end
 
-  # TODO: destroy the cart in backend?
   def destroy_cart
       session[:cart_id] = nil
   end

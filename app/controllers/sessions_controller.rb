@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
           if user.activated?
             # Sign in the user & redirect to the user's show page
             sign_in user
-            params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+            # params[:session][:remember_me] == '1' ? remember(user) : forget(user)
             redirect_back_or_default(user_url(user.id))
           else
             message  = I18n.t('account_not_activated')

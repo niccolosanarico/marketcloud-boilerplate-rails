@@ -42,7 +42,7 @@ class CartController < ApplicationController
     respond_to do |format|
       format.html { redirect_to cart_path }
       format.js   {}
-      format.json { head :no_content } #no need to return data here
+      format.json { head :no_content } #no need to return data here, the query was AJAX only
     end
   end
 
