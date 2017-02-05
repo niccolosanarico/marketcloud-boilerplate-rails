@@ -29,7 +29,7 @@ class PasswordResetsController < ApplicationController
     elsif @user.update!(options: {password: params[:user][:password], password_confirmation: params[:user][:password_confirmation]})
       sign_in @user
       flash[:success] = "Password has been reset."
-      redirect_to @user
+      redirect_to user_path(@user.id)
     else
       render 'edit'
     end
