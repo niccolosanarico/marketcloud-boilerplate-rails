@@ -20,6 +20,8 @@ class User < Marketcloud::User
       @remember_digest = attributes['remember_digest']
       @activation_digest = attributes['activation_digest']
       @activated_at = attributes['activated_at']
+      @reset_digest = attributes['reset_digest']
+      @reset_sent_at = attributes['reset_sent_at']
     end
   end
 
