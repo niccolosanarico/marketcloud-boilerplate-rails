@@ -11,7 +11,8 @@ module ApplicationHelper
 
   # Get back to previously saved location
   def redirect_back_or_default(default = root_url)
-    redirect_to(session[:return_to] || request.referer || default)
+    # redirect_to(session[:return_to] || request.referer || default)
+    redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
 
