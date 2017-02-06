@@ -43,7 +43,6 @@
   braintree.setup('<%= @payment.token %>', 'dropin', {
     container: 'dropin-container',
     onError: function (payload) {
-        console.log(payload);
         if (payload.type === 'VALIDATION') {
             // re-enable button
             $('#paymentFormButton').removeAttr('disabled');

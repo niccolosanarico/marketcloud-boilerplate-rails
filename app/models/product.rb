@@ -1,4 +1,7 @@
 class Product < Marketcloud::Product
+
+  # Return the product category
+  # @return the category the product belongs to
   def category
     ::Category.find(category_id)
   end
@@ -16,10 +19,12 @@ class Product < Marketcloud::Product
     end
 
     if variant.length == 1; return variant.first; end
-    
+
     return nil
   end
 
+  # Overrides to_param for readable links
+  # @return a string with id and slug
   def to_param
     "#{id}-#{slug}"
   end

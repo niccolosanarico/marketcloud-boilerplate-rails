@@ -4,7 +4,7 @@ class User < Marketcloud::User
   attr_accessor :password_confirmation,
                 :remember_digest,
                 :remember_token,
-                :activated, # status is a custom field used to check the confirmation cycle => 1. unconfirmed 2. confirmed
+                :activated, # a custom field used to check the confirmation cycle => 1. unconfirmed 2. confirmed
                 :activation_digest,
                 :activation_token,
                 :activated_at,
@@ -74,7 +74,6 @@ class User < Marketcloud::User
   end
 
   # Returns true if the given token matches the digest.
-
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
