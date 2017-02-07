@@ -32,7 +32,7 @@ module ApplicationHelper
 
   # Printer
   def pretty_money(amount)
-    sprintf "#{Marketcloud.configuration.application.currency_code} %.2f", amount
+    sprintf "<span itemprop='priceCurrency'>#{Marketcloud.configuration.application.currency_code}</span> </span itemprop='price'>%.2f</span>", amount
   end
 
   # VAT printer

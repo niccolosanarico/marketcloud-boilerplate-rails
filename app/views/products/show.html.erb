@@ -4,13 +4,13 @@
 
 <% variant = (@product.has_variants && @variant_id) ? @product.variants.select { |v| v.id == @variant_id }.first : @product %>
 
-<div class="row">
-  <h1 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center"><%= "#{variant.name}" %></h1>
+<div class="row" itemscope itemtype="http://schema.org/Product">
+  <h1 style="border-bottom: 1px #EEE solid; padding-bottom: 10px;" class="text-center" itemprop="name"><%= "#{variant.name}" %></h1>
   <div class="col-md-offset-1 col-md-3 col-sm-6 col-xs-12 img-for-product margin-bottom-20px">
 
-    <%= link_to image_tag(variant.images.first, class:"img-responsive img-selected center-block", alt: "#{variant.name}"), "#",
+    <%= link_to image_tag(variant.images.first, class:"img-responsive img-selected center-block", alt: "#{variant.name}", data: { itemprop: "image"}), "#",
         class: "thumbnail", data: {
-              image_id:"", toggle:"modal", title:"#{variant.name}",
+              image_id:"", toggle:"modal",  title:"#{variant.name}",
               image:"#{variant.images.first}",
               target:"#image-gallery"} %>
 
@@ -44,11 +44,11 @@
 
       <% end %>
 
-      <li class="margin-bottom-20px"><%= t('price') %>: <span style="color:red; font-size: 1.2em;">
-        <%= pretty_money variant.price %></span><%= print_vat(:products) %>
+      <li class="margin-bottom-20px"><%= t('price') %>:
+        <span style="color:red; font-size: 1.2em;"><%= pretty_money variant.price %></span><%= print_vat(:products) %>
       </li>
 
-      <li class="margin-bottom-20px">
+      <li class="margin-bottom-20px" itemprop="availability" href="http://schema.org/InStock">
         <%= if variant.respond_to? :stock_status; t(variant.stock_status) end %>
       </li>
 
@@ -73,7 +73,7 @@
   <div class="col-md-4 col-sm-6 col-xs-12">
     <ul class="list-unstyled">
       <li><h4><%= t('product_details') %></h4></li>
-      <li><%= if variant.description; variant.description.html_safe; end %></li>
+      <li itemprop="description"><%= if variant.description; variant.description.html_safe; end %></li>
     </ul>
   </div>
 
