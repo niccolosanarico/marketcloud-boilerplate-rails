@@ -1,4 +1,5 @@
 class UserMailer < ApplicationMailer
+  add_template_helper(ApplicationHelper)
 
   def account_activation(user)
     @user = user

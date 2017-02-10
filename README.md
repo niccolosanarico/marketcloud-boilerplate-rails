@@ -1,6 +1,6 @@
 # Marketcloud Rails Boilerplate
 
-This is a Rails-based boilerplate for a [Marketcloud](http://www.marketcloud.it)-powered e-commerce site. This boilerplate is built on top of Rails 5, bootstrap 3.4 and supports out of the box [segment.com](http://segment.com) analytics, [sendgrid](https://www.sendgrid.com) for emails and [Redis](https://www.redis.io) for basic caching of API calls to Marketcloud.
+This is a Rails-based boilerplate for a [Marketcloud](http://www.marketcloud.it)-powered e-commerce site. This boilerplate is built on top of Rails 5, bootstrap 3.4 and supports out of the box Braintree/Paypal payments (sorry, no Stripe yet), [segment.com](http://segment.com) analytics, [sendgrid](https://www.sendgrid.com) for emails and [Redis](https://www.redis.io) for basic caching of API calls to Marketcloud.
 
 ## Installation
 
@@ -11,7 +11,7 @@ Just clone the repository and *git push* to heroku. See below to setup relevant 
 
 ## Environment variables
 
-Setup the following environment variables to have a fully functional ecommerce: 
+Setup the following environment variables to have a fully functional ecommerce:
 
 - *marketcloud_private_key* = the private key of the Marketcloud store (MANDATORY)
 - *marketcloud_public_key* = the public key of the Marketcloud store (MANDATORY)
@@ -27,6 +27,14 @@ The boilerplate includes basic email templates for the following events:
 - User signup
 - Password reset
 - Order confirmation
+
+## TODO & ISSUES
+
+This boilerplate is still a WIP, and you may find issues here and there. Some known issues are:
+
+- The store expects physical products, thus there is a manadatory shipping step in the checkout process. Remove it in case you want to sell digital items
+- The address form treats "customer name" as a company name (yes, it has been set it up for a B2B store)
+
 
 ## Testing
 
