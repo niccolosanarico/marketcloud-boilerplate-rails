@@ -1,0 +1,21 @@
+Marketcloud Shop
+
+Hi <%= @user.name %>,
+
+Thank you for your order! See details.
+
+
+Product | Quantity | Price
+
+  <% @order.products.each do |product| %>
+    <%= product["name"] %> | <%= product["quantity"] %> | <%= pretty_money product["price"] %>
+  <% end %>
+
+  <%= "#{t('items_total')}: "%> <%= pretty_money @order.items_total %>
+  <%= "#{t('VAT')}: "%> <%= pretty_money @order.taxes_total %>
+  <%= "#{t('shipping')}: "%> <%= pretty_money @order.shipping_total %>
+  <%= "#{t('order_total')}: "%> <%= pretty_money @order.total %>
+  
+Best,
+
+Marketcloud Boilerplate

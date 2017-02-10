@@ -274,6 +274,8 @@ class CheckoutController < ApplicationController
         }
       })
 
+    UserMailer.confirm_order(current_user, @order).deliver_now
+
     flash.now[:success] = (I18n.t("order_success"))
     render 'orders/show'
   end

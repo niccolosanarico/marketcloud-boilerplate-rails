@@ -1,0 +1,42 @@
+<h1>Marketcloud Shop</h1>
+
+<p>Hi <%= @user.name %>,</p>
+
+<p>
+Thank you for your order! See details.
+</p>
+
+<table>
+  <tr>
+    <th>
+      Product
+    </th>
+    <th>
+      Quantity
+    </th>
+    <th>
+      Price
+    </th>
+  </tr>
+  <% @order.products.each do |product| %>
+    <tr>
+      <td>
+        <%= product["name"] %>
+      </td>
+      <td>
+        <%= product["quantity"] %>
+      </td>
+      <td>
+        <%= pretty_money product["price"] %>
+      </td>
+    </tr>
+  <% end %>
+  <tr><td><%= "#{t('items_total')}: "%></td><td></td><td class="text-right"><%= pretty_money order.items_total %></td></tr>
+  <tr><td><%= "#{t('VAT')}: "%></td><td></td><td class="text-right"><%= pretty_money order.taxes_total %></td></tr>
+  <tr><td><%= "#{t('shipping')}: "%></td><td></td><td class="text-right"><%= pretty_money order.shipping_total %></td></tr>
+  <tr class="info"><td><h4><%= "#{t('order_total')}: "%></h4></td><td></td><td class="text-right"><h4><%= pretty_money order.total %></h4></td></tr>
+</table>
+
+Best,
+
+Marketcloud Boilerplate
