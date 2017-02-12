@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def create
 
     begin
-      @user = User.create(user_params[:name], user_params[:email], user_params[:password], user_params[:password_confirmation])
+      @user = User.create(user_params[:name], user_params[:email].strip.downcase, user_params[:password], user_params[:password_confirmation])
     rescue Marketcloud::ExistingUserError
       flash.now[:error] = I18n.t('existing_email')
       render 'new' and return

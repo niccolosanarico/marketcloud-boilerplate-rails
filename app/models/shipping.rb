@@ -1,5 +1,25 @@
 class Shipping < Marketcloud::Shipping
 
+  #
+  #
+  # A bit of dirty approach to initialize values
+  def initialize(attributes)
+    super
+
+    # The wrapper to the API does not judge original values, so I initialize them here
+    @max_weight ||= 10000000000
+    @min_weight ||= 0
+    @max_depth  ||= 10000000000
+    @min_depth 	||= 0
+    @max_height ||= 10000000000
+    @min_height ||= 0
+    @max_width 	||= 10000000000
+    @min_width 	||= 0
+    @max_value 	||= 10000000000
+    @min_value 	||= 0
+
+  end
+
   # Compute the possible shipping methods
   # @param cart a cart, to compute shipping values
   # @param shipping_address to select the shipping method
