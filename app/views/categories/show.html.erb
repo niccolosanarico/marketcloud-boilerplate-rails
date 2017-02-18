@@ -1,5 +1,10 @@
-<%= meta_tag(:title, "#{@category.name}") %>
-<%= meta_tag(:description, "#{@category.description}") %>
+<%= meta_tag(:title, @category.meta['title']) unless @category.meta.nil?%>
+<%= meta_tag(:description, @category.meta['description']) unless @category.meta.nil?%>
+<%= meta_tag(:keywords, @category.meta['keywords']) unless @category.meta.nil?%>
+<%= meta_tag(:og_url,request.original_url) %>
+<%= meta_tag(:og_title, @category.facebook['title']) unless @category.facebook.nil? %>
+<%= meta_tag(:og_description, @category.facebook['description']) unless @category.facebook.nil? %>
+<%= meta_tag(:og_image, @category.facebook['image']) unless @category.facebook.nil? %>
 
 <div class="row">
   <div class="col-md-2 col-sm-2 hidden-xs">
@@ -13,7 +18,7 @@
 
     <div class="col-md-12 col-sm-12 col-xs-12">
       <h1><%= @category.name %></h1>
-      <p><%= @category.description %></p>
+      <p><%= @category.description.html_safe %></p>
     </div>
 
   <% @products.each_with_index do |product, i| %>
