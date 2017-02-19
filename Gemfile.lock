@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/niccolosanarico/marketcloud-ruby.git
-  revision: b43072da55941b1a48f2dfbb1525d3fe3c256f32
+  revision: 921bb45eb982929cf4fed5ceb8c893871a581ee7
   specs:
     marketcloud-ruby (0.2.0)
       faraday
