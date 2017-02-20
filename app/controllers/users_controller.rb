@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def new
-    @user = User.new nil
+    @user = User.new( { name: nil, email: nil, password: nil, password_confirmation: nil } )
   end
 
   def show
