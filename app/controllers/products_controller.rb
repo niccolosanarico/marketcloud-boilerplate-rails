@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
       event: 'Product Viewed',
       properties: {
         product_id: @product.id,
-        sku: @product.sku,
+        sku: @product.has_variants ? @product.variants.select { |v| v.variant_id == @variant_id }.first.sku : @product.sku,
         name: @product.name,
         price: @product.price,
         category: @product.category.name
